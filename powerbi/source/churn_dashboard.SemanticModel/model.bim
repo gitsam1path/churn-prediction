@@ -1,5 +1,5 @@
 {
-  "name": "555cacf1-3dff-4d87-92b4-8d667a34bcfb",
+  "name": "a7db486c-d5b9-4cd7-bb0c-9ca5902199e0",
   "compatibilityLevel": 1550,
   "model": {
     "culture": "fr-FR",
@@ -12,13 +12,13 @@
     "tables": [
       {
         "name": "clients",
-        "lineageTag": "d36521e2-b976-41f5-948f-e046b43acedc",
+        "lineageTag": "aa7f7005-be0a-4097-8778-029d31e64491",
         "columns": [
           {
             "name": "id_client",
             "dataType": "string",
             "sourceColumn": "id_client",
-            "lineageTag": "3253f9df-212a-4615-b585-79cf892feb88",
+            "lineageTag": "17f7c505-fc8a-4aa4-9bcd-6aa39e2f57e6",
             "summarizeBy": "none",
             "annotations": [
               {
@@ -31,7 +31,7 @@
             "name": "genre",
             "dataType": "string",
             "sourceColumn": "genre",
-            "lineageTag": "17fd20fb-68be-46de-b640-65ac0fc9f3af",
+            "lineageTag": "cedda62a-d820-4686-ad9d-909e010af0b2",
             "summarizeBy": "none",
             "annotations": [
               {
@@ -44,7 +44,7 @@
             "name": "senior",
             "dataType": "string",
             "sourceColumn": "senior",
-            "lineageTag": "ebcb7e30-6788-4fd5-bd67-ada78376a3ff",
+            "lineageTag": "ae289037-0fe8-4a98-8cb3-3ee889b9b690",
             "summarizeBy": "none",
             "annotations": [
               {
@@ -57,7 +57,7 @@
             "name": "en_couple",
             "dataType": "string",
             "sourceColumn": "en_couple",
-            "lineageTag": "7af67cd3-496d-49e3-a96e-cffa69107e7d",
+            "lineageTag": "6dd7f4eb-5bf1-43c1-8eb8-8623769f7ac5",
             "summarizeBy": "none",
             "annotations": [
               {
@@ -70,7 +70,7 @@
             "name": "personnes_a_charge",
             "dataType": "string",
             "sourceColumn": "personnes_a_charge",
-            "lineageTag": "6bcbfed3-4733-4056-8332-8aadd6c3476d",
+            "lineageTag": "03f90be3-ac8b-42d0-b337-3eb9ac846ff4",
             "summarizeBy": "none",
             "annotations": [
               {
@@ -83,7 +83,7 @@
             "name": "anciennete_mois",
             "dataType": "int64",
             "sourceColumn": "anciennete_mois",
-            "lineageTag": "451a0ec5-1745-4f79-89b5-1ba10221ef7a",
+            "lineageTag": "56c177ca-eb9a-4595-b2c1-f13c75bec566",
             "summarizeBy": "none",
             "annotations": [
               {
@@ -97,7 +97,7 @@
             "name": "tranche_anciennete",
             "dataType": "string",
             "sourceColumn": "tranche_anciennete",
-            "lineageTag": "c6c62070-cfd3-400b-8038-18d6c21c0106",
+            "lineageTag": "0017a13c-3f3d-4401-a426-8f66dace7e5f",
             "summarizeBy": "none",
             "annotations": [
               {
@@ -111,7 +111,7 @@
             "name": "tranche_ordre",
             "dataType": "int64",
             "sourceColumn": "tranche_ordre",
-            "lineageTag": "dc2e510e-9c47-4123-85e9-5fb4c8662b6e",
+            "lineageTag": "7ace2fe5-6730-4b6f-8039-d8c28f647e6e",
             "summarizeBy": "none",
             "annotations": [
               {
@@ -126,7 +126,7 @@
             "name": "contrat",
             "dataType": "string",
             "sourceColumn": "contrat",
-            "lineageTag": "13695207-0dd2-4169-8dde-ba04a8a6947c",
+            "lineageTag": "4b9e8313-7b0b-4867-b812-815960542766",
             "summarizeBy": "none",
             "annotations": [
               {
@@ -139,7 +139,7 @@
             "name": "internet",
             "dataType": "string",
             "sourceColumn": "internet",
-            "lineageTag": "99eccb7b-ebd5-468f-80fc-61c5a808c506",
+            "lineageTag": "e167e556-ddc2-4de8-90f0-aa2176d84a87",
             "summarizeBy": "none",
             "annotations": [
               {
@@ -152,7 +152,7 @@
             "name": "moyen_paiement",
             "dataType": "string",
             "sourceColumn": "moyen_paiement",
-            "lineageTag": "a19c7b05-db74-4196-a693-675c240a3ac3",
+            "lineageTag": "2df8a670-09e7-4c7d-b3da-19253a2d5981",
             "summarizeBy": "none",
             "annotations": [
               {
@@ -165,7 +165,7 @@
             "name": "facture_dematerialisee",
             "dataType": "string",
             "sourceColumn": "facture_dematerialisee",
-            "lineageTag": "57edd3d0-d8ee-45f9-a461-04bbb2bd95e4",
+            "lineageTag": "f714d24c-6e34-4243-ba27-78569a9f51e8",
             "summarizeBy": "none",
             "annotations": [
               {
@@ -178,7 +178,7 @@
             "name": "nb_services",
             "dataType": "int64",
             "sourceColumn": "nb_services",
-            "lineageTag": "e65bdfa6-4244-4b4d-84b5-071a3842d88f",
+            "lineageTag": "7b9f8522-046a-4633-9d56-96e3563dbab1",
             "summarizeBy": "none",
             "annotations": [
               {
@@ -192,7 +192,7 @@
             "name": "support_technique",
             "dataType": "string",
             "sourceColumn": "support_technique",
-            "lineageTag": "52b8751c-729a-47fe-aac2-6821000624ab",
+            "lineageTag": "299a5eac-bbd3-4044-89f5-8ae66f1ef45f",
             "summarizeBy": "none",
             "annotations": [
               {
@@ -205,7 +205,7 @@
             "name": "securite_en_ligne",
             "dataType": "string",
             "sourceColumn": "securite_en_ligne",
-            "lineageTag": "ff7656df-38a3-42d5-bfdd-c383422e7b12",
+            "lineageTag": "54ed013a-9aeb-438d-9eca-07dc9e0bfdea",
             "summarizeBy": "none",
             "annotations": [
               {
@@ -218,7 +218,7 @@
             "name": "facture_mensuelle",
             "dataType": "double",
             "sourceColumn": "facture_mensuelle",
-            "lineageTag": "1af38ac4-fb4c-41b1-95f4-3496fa3ae319",
+            "lineageTag": "e9b946e3-dff1-4892-9857-8a74883c8473",
             "summarizeBy": "sum",
             "annotations": [
               {
@@ -232,7 +232,7 @@
             "name": "total_facture",
             "dataType": "double",
             "sourceColumn": "total_facture",
-            "lineageTag": "d4538257-b1f6-4586-ba8c-7eb4d70a049d",
+            "lineageTag": "49c61b44-865a-4a4d-86e8-25980afa2719",
             "summarizeBy": "sum",
             "annotations": [
               {
@@ -246,7 +246,7 @@
             "name": "valeur_annuelle",
             "dataType": "double",
             "sourceColumn": "valeur_annuelle",
-            "lineageTag": "fdb03f6d-3712-4cbc-80dc-db06da2c1bbd",
+            "lineageTag": "04cceb38-1eda-4504-a412-57d0d4deae2c",
             "summarizeBy": "sum",
             "annotations": [
               {
@@ -260,7 +260,7 @@
             "name": "churn",
             "dataType": "int64",
             "sourceColumn": "churn",
-            "lineageTag": "0a9e1191-0788-4840-86cd-6a6dc874752f",
+            "lineageTag": "979221b8-6b4c-485f-a332-9407d6245acc",
             "summarizeBy": "sum",
             "annotations": [
               {
@@ -274,7 +274,7 @@
             "name": "churn_reel",
             "dataType": "string",
             "sourceColumn": "churn_reel",
-            "lineageTag": "6b379066-2da1-4cae-a128-349dfe797d04",
+            "lineageTag": "d6f6c708-43b4-4841-8afc-94b8654e2e0d",
             "summarizeBy": "none",
             "annotations": [
               {
@@ -287,7 +287,7 @@
             "name": "probabilite_churn",
             "dataType": "double",
             "sourceColumn": "probabilite_churn",
-            "lineageTag": "9e19c163-2c64-4834-9a61-347ee55768e8",
+            "lineageTag": "a746a4bf-d0a3-4694-9b7a-974809e5a90f",
             "summarizeBy": "none",
             "annotations": [
               {
@@ -301,7 +301,7 @@
             "name": "segment_risque",
             "dataType": "string",
             "sourceColumn": "segment_risque",
-            "lineageTag": "80c45bf1-ffb5-44f2-9723-70b0afa5e018",
+            "lineageTag": "41aaa34e-53d1-436e-b001-c5cb0d23fb46",
             "summarizeBy": "none",
             "annotations": [
               {
@@ -314,7 +314,7 @@
             "name": "cible_campagne",
             "dataType": "string",
             "sourceColumn": "cible_campagne",
-            "lineageTag": "de31e7d7-7d9e-47f8-b4d7-0d91a76c1472",
+            "lineageTag": "4cb91f70-9088-45af-85ca-e9c9211ef2d2",
             "summarizeBy": "none",
             "annotations": [
               {
@@ -327,7 +327,7 @@
             "name": "gain_attendu",
             "dataType": "double",
             "sourceColumn": "gain_attendu",
-            "lineageTag": "b67ca855-6789-4305-ab17-1546b06a90d6",
+            "lineageTag": "0efdedf3-3a7a-4a9f-b253-39bed90e10aa",
             "summarizeBy": "sum",
             "annotations": [
               {
@@ -341,7 +341,7 @@
             "name": "motif_1",
             "dataType": "string",
             "sourceColumn": "motif_1",
-            "lineageTag": "4436bfd0-989b-46a0-b406-f1c11751e97b",
+            "lineageTag": "0b38f167-bfa0-4d0d-945c-4ed856cfc626",
             "summarizeBy": "none",
             "annotations": [
               {
@@ -354,7 +354,7 @@
             "name": "motif_2",
             "dataType": "string",
             "sourceColumn": "motif_2",
-            "lineageTag": "70e22d5e-7ea1-4d5b-8957-a0156784f431",
+            "lineageTag": "53f4a0e0-4f78-46db-bd1e-ee37eb4c335c",
             "summarizeBy": "none",
             "annotations": [
               {
@@ -393,79 +393,79 @@
             "name": "Nb clients",
             "expression": "COUNTROWS ( clients )",
             "formatString": "#,0",
-            "lineageTag": "d93ad476-2337-4278-bd7b-d23524847ecb"
+            "lineageTag": "51df0a89-bc27-4a53-8d12-6654f82634eb"
           },
           {
             "name": "Nb départs",
             "expression": "SUM ( clients[churn] )",
             "formatString": "#,0",
-            "lineageTag": "61cc2351-8c1d-4219-a06a-da1ce5cb4886"
+            "lineageTag": "be82258a-1543-404b-8dfd-3a83ad937628"
           },
           {
             "name": "Taux de churn",
             "expression": "DIVIDE ( [Nb départs], [Nb clients] )",
             "formatString": "0.0 %",
-            "lineageTag": "955ebcee-2525-462a-99cc-33c800387e7f"
+            "lineageTag": "d8ac8ce8-8e84-4eb9-8536-f3ab5bfc94cc"
           },
           {
             "name": "Revenu mensuel",
             "expression": "SUM ( clients[facture_mensuelle] )",
             "formatString": "#,0 $",
-            "lineageTag": "a82a8899-7086-48a8-b091-b7e48ef5ec42"
+            "lineageTag": "fe53749e-9c2a-4f3b-9604-82236c7f2b1a"
           },
           {
             "name": "Revenu mensuel perdu",
             "expression": "CALCULATE ( SUM ( clients[facture_mensuelle] ), clients[churn] = 1 )",
             "formatString": "#,0 $",
-            "lineageTag": "2ad73470-20f0-4437-b0a3-026159e27789"
+            "lineageTag": "288b586f-6c8d-4094-91d9-d7b14b80c1f0"
           },
           {
             "name": "Part du revenu perdu",
             "expression": "DIVIDE ( [Revenu mensuel perdu], [Revenu mensuel] )",
             "formatString": "0.0 %",
-            "lineageTag": "8b440e27-4be0-4238-a2be-ad2d247ae9ed"
+            "lineageTag": "19c7fcd5-d758-4753-9255-9a68e0ab7711"
           },
           {
             "name": "Probabilité moyenne",
             "expression": "AVERAGE ( clients[probabilite_churn] )",
             "formatString": "0.0 %",
-            "lineageTag": "0b34d156-301c-45d8-b70e-c6f223d11317"
+            "lineageTag": "2b649803-4192-4223-a959-2b859271676f"
           },
           {
             "name": "Clients à risque élevé",
             "expression": "CALCULATE ( [Nb clients], clients[segment_risque] = \"Élevé\" )",
             "formatString": "#,0",
-            "lineageTag": "417acc6a-aac6-40ba-bcd3-981058daad2f"
+            "lineageTag": "f93b1bb5-e796-41d9-903f-19872a22d852"
           },
           {
             "name": "Clients ciblés",
             "expression": "CALCULATE ( [Nb clients], clients[cible_campagne] = \"Oui\" )",
             "formatString": "#,0",
-            "lineageTag": "86df239a-bcf3-45f8-a248-bef1a762cb4b"
+            "lineageTag": "db58e44c-6666-4943-af4d-ea0ccff0e8ff"
           },
           {
             "name": "Revenu mensuel à risque",
             "expression": "SUMX ( clients, clients[facture_mensuelle] * clients[probabilite_churn] )",
             "formatString": "#,0 $",
-            "lineageTag": "9f452453-74f8-431b-95bd-a423d3590e37"
+            "lineageTag": "5e0b517e-31c1-46d2-aa36-9fa720ad2bd0"
           },
           {
             "name": "Gain attendu de la campagne",
             "expression": "CALCULATE ( SUM ( clients[gain_attendu] ), clients[cible_campagne] = \"Oui\" )",
             "formatString": "#,0 $",
-            "lineageTag": "73174272-9213-4545-8ffc-816cae76bd16"
+            "lineageTag": "828ad1f4-1ca6-466e-b45e-84b256ad4766"
           }
         ]
       },
       {
         "name": "comparaison_modeles",
-        "lineageTag": "771774a1-a96e-45e5-ab8c-284ab8de31c4",
+        "lineageTag": "33885318-864e-4563-b256-8561c897da65",
         "columns": [
           {
             "name": "modele",
             "dataType": "string",
             "sourceColumn": "modele",
-            "lineageTag": "1f1ad8d7-cd7a-4a2f-8de0-e5b5e122e21b",
+            "lineageTag": "8f558739-befc-4d75-ba39-36b39e3e356f",
             "summarizeBy": "none",
             "annotations": [
               {
@@ -478,7 +478,7 @@
             "name": "roc_auc",
             "dataType": "double",
             "sourceColumn": "roc_auc",
-            "lineageTag": "0976a1e6-214b-49bd-9df8-00014a1196be",
+            "lineageTag": "1c7a41f0-6e15-4c7e-a412-9a0265b916d9",
             "summarizeBy": "none",
             "annotations": [
               {
@@ -492,7 +492,7 @@
             "name": "roc_auc_ecart_type",
             "dataType": "double",
             "sourceColumn": "roc_auc_ecart_type",
-            "lineageTag": "1c8d62c5-f309-4047-8dd8-0379272f8a37",
+            "lineageTag": "f5828da2-35c6-4550-9f55-29f750b4c136",
             "summarizeBy": "none",
             "annotations": [
               {
@@ -506,7 +506,7 @@
             "name": "pr_auc",
             "dataType": "double",
             "sourceColumn": "pr_auc",
-            "lineageTag": "388b55c0-ee13-4d15-9d60-0e20ffba3930",
+            "lineageTag": "8fa757b9-2c67-46d0-8c4e-6a99e63a2422",
             "summarizeBy": "none",
             "annotations": [
               {
@@ -520,7 +520,7 @@
             "name": "profit_cv",
             "dataType": "double",
             "sourceColumn": "profit_cv",
-            "lineageTag": "d41e849e-a665-49c8-b9a7-438a1dd924b9",
+            "lineageTag": "5d0e26d4-615c-4732-9c63-0db4ecab2f3d",
             "summarizeBy": "none",
             "annotations": [
               {
@@ -534,7 +534,7 @@
             "name": "retenu",
             "dataType": "boolean",
             "sourceColumn": "retenu",
-            "lineageTag": "c7dba7bb-2765-4834-b5fe-3c5d4d828b68",
+            "lineageTag": "63375148-30e8-4da1-a024-80a5335858e4",
             "summarizeBy": "none",
             "annotations": [
               {
@@ -571,13 +571,13 @@
       },
       {
         "name": "importance_variables",
-        "lineageTag": "dc0eb77e-5ff7-430f-a969-e0548016fedf",
+        "lineageTag": "a570f77c-fa56-4f6a-a69b-910f0d72a0aa",
         "columns": [
           {
             "name": "variable",
             "dataType": "string",
             "sourceColumn": "variable",
-            "lineageTag": "35a223a5-4207-4641-a876-7183b3914200",
+            "lineageTag": "a01d3914-79ba-4e0d-8690-c9c8caa82327",
             "summarizeBy": "none",
             "annotations": [
               {
@@ -590,7 +590,7 @@
             "name": "importance",
             "dataType": "double",
             "sourceColumn": "importance",
-            "lineageTag": "43a4c132-d1ba-4e37-bd78-2dcd2428b6a1",
+            "lineageTag": "f4235c16-db13-4b41-b63a-05ed348c636e",
             "summarizeBy": "sum",
             "annotations": [
               {
@@ -604,7 +604,7 @@
             "name": "libelle",
             "dataType": "string",
             "sourceColumn": "libelle",
-            "lineageTag": "501e04e0-1818-4917-9c70-238e6404876e",
+            "lineageTag": "3be70c12-f599-4fc5-a05b-ac130992440c",
             "summarizeBy": "none",
             "annotations": [
               {
@@ -641,13 +641,13 @@
       },
       {
         "name": "courbe_profit",
-        "lineageTag": "0bc96284-9276-4b55-972d-356832695f49",
+        "lineageTag": "a3153ccd-f39d-427f-b980-9ee94b12234d",
         "columns": [
           {
             "name": "seuil",
             "dataType": "double",
             "sourceColumn": "seuil",
-            "lineageTag": "bbc55598-ce63-40c6-8939-f93e79bacfc2",
+            "lineageTag": "8941ed0e-ff96-4381-9c22-881bbc090d3a",
             "summarizeBy": "none",
             "annotations": [
               {
@@ -661,7 +661,7 @@
             "name": "clients_cibles",
             "dataType": "int64",
             "sourceColumn": "clients_cibles",
-            "lineageTag": "fdc71510-74f8-4b29-a69d-ff0b1a525332",
+            "lineageTag": "7b20ef83-388f-48ab-987a-ab57e3a5c4f9",
             "summarizeBy": "sum",
             "annotations": [
               {
@@ -675,7 +675,7 @@
             "name": "churners_cibles",
             "dataType": "int64",
             "sourceColumn": "churners_cibles",
-            "lineageTag": "4b165c8e-35dc-46ca-ba91-77f23a6893c7",
+            "lineageTag": "fd88f535-dfc4-405e-a6ee-daddc457af1a",
             "summarizeBy": "sum",
             "annotations": [
               {
@@ -689,7 +689,7 @@
             "name": "gain",
             "dataType": "double",
             "sourceColumn": "gain",
-            "lineageTag": "984c107b-9936-4c64-8c50-82eabe081940",
+            "lineageTag": "6546e060-b885-402e-a6f2-c5010764dc2d",
             "summarizeBy": "sum",
             "annotations": [
               {
@@ -703,7 +703,7 @@
             "name": "cout",
             "dataType": "double",
             "sourceColumn": "cout",
-            "lineageTag": "5f0df843-9c64-488d-93a0-8d70f35d67d6",
+            "lineageTag": "1823e05e-f53e-44a6-90dd-2e55d7900867",
             "summarizeBy": "sum",
             "annotations": [
               {
@@ -717,7 +717,7 @@
             "name": "profit",
             "dataType": "double",
             "sourceColumn": "profit",
-            "lineageTag": "50e680fc-14b0-4f4d-b992-8e9195f08e19",
+            "lineageTag": "251e8d70-e149-4ee8-92cf-8e9071b159f8",
             "summarizeBy": "sum",
             "annotations": [
               {
@@ -755,13 +755,13 @@
       },
       {
         "name": "courbe_gain",
-        "lineageTag": "a6227b11-9980-4318-8b6e-e0fd05ac1c73",
+        "lineageTag": "e79aa01c-10e6-4450-a2bd-14b2f9c61626",
         "columns": [
           {
             "name": "part_clients_contactes",
             "dataType": "double",
             "sourceColumn": "part_clients_contactes",
-            "lineageTag": "ef3d45a7-1fdb-4237-8bc2-27aee5ab9806",
+            "lineageTag": "eaa68745-0705-4f4c-914d-46a9023ee7e5",
             "summarizeBy": "none",
             "annotations": [
               {
@@ -775,7 +775,7 @@
             "name": "part_departs_captes",
             "dataType": "double",
             "sourceColumn": "part_departs_captes",
-            "lineageTag": "aa5bd4fa-9bc1-4ffe-b9d6-91774a265bb0",
+            "lineageTag": "3f40e3eb-d2c2-40e9-aaea-ef6d01b418a0",
             "summarizeBy": "sum",
             "annotations": [
               {
@@ -789,7 +789,7 @@
             "name": "part_aleatoire",
             "dataType": "double",
             "sourceColumn": "part_aleatoire",
-            "lineageTag": "dbc51b9f-9ba2-461e-8d6b-192813b7cc8b",
+            "lineageTag": "1997df52-0634-4867-becd-8a90cf759b7b",
             "summarizeBy": "sum",
             "annotations": [
               {
@@ -827,13 +827,13 @@
       },
       {
         "name": "parametres",
-        "lineageTag": "b1a32719-379a-43b9-a8d4-e2e0925cdea9",
+        "lineageTag": "e387aff8-4a4f-4d33-bb59-07438ba18cf2",
         "columns": [
           {
             "name": "seuil_campagne",
             "dataType": "double",
             "sourceColumn": "seuil_campagne",
-            "lineageTag": "b063d455-1930-4f94-b22d-51a97e62e097",
+            "lineageTag": "131b711c-0a6f-4f5c-b951-882214daea80",
             "summarizeBy": "sum",
             "annotations": [
               {
@@ -847,7 +847,7 @@
             "name": "cout_offre",
             "dataType": "double",
             "sourceColumn": "cout_offre",
-            "lineageTag": "ebb1aad9-586f-4938-b4cd-11fd4a3e1769",
+            "lineageTag": "58ff0fb1-a2bf-48d8-9bb2-6606a8ff2239",
             "summarizeBy": "sum",
             "annotations": [
               {
@@ -861,7 +861,7 @@
             "name": "taux_succes",
             "dataType": "double",
             "sourceColumn": "taux_succes",
-            "lineageTag": "87f79eba-6ae1-4c5e-bb8a-06f675a9fda8",
+            "lineageTag": "037559b7-453a-4726-a013-d42b8990b4b2",
             "summarizeBy": "sum",
             "annotations": [
               {
@@ -875,7 +875,7 @@
             "name": "mois_valeur",
             "dataType": "int64",
             "sourceColumn": "mois_valeur",
-            "lineageTag": "17b2281e-ba7b-42d9-8714-9e766344ca13",
+            "lineageTag": "5680f49e-c33e-45d5-9b48-2360b34a66f2",
             "summarizeBy": "sum",
             "annotations": [
               {

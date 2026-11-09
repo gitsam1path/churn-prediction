@@ -4,11 +4,11 @@
 
 **Prédire quels clients vont partir, expliquer pourquoi, et décider qui contacter pour maximiser le profit d'une campagne de rétention.**
 
-Machine Learning (scikit-learn) · tableau de bord **Power BI** (projet `.pbip`, exportable en `.pbit`) · données Telco d'IBM
+Machine Learning (scikit-learn) · tableau de bord **Power BI** (`.pbit`, données intégrées) · données Telco d'IBM
 
 ![Python](https://img.shields.io/badge/Python-3.11+-3776AB?logo=python&logoColor=white)
 ![scikit-learn](https://img.shields.io/badge/scikit--learn-1.8-F7931E?logo=scikitlearn&logoColor=white)
-![Power BI](https://img.shields.io/badge/Power%20BI-.pbip-F2C811?logo=powerbi&logoColor=black)
+![Power BI](https://img.shields.io/badge/Power%20BI-.pbit-F2C811?logo=powerbi&logoColor=black)
 ![CI](https://github.com/gitsam1path/churn-prediction/actions/workflows/ci.yml/badge.svg)
 
 </div>
@@ -133,10 +133,9 @@ par un modèle qui ne l'a **jamais vu** pendant l'entraînement. Sinon, les scor
 
 ## 📈 Le tableau de bord Power BI
 
-Fichier : **[`powerbi/churn_dashboard.pbip`](powerbi/churn_dashboard.pbip)** · mode d'emploi : [`powerbi/GUIDE.md`](powerbi/GUIDE.md)
+Fichier : **[`powerbi/churn_dashboard.pbit`](powerbi/churn_dashboard.pbit)** · mode d'emploi : [`powerbi/GUIDE.md`](powerbi/GUIDE.md)
 
-Double-cliquez sur `churn_dashboard.pbip`, puis **Accueil → Actualiser**. Les données sont **intégrées au rapport** : aucun chemin à configurer.
-Pour un modèle `.pbit` : **Fichier → Exporter → Modèle Power BI**.
+Double-cliquez sur `churn_dashboard.pbit` : les données sont **intégrées au rapport**, aucun chemin à configurer.
 
 | Page | Contenu |
 |---|---|
@@ -146,14 +145,10 @@ Pour un modèle `.pbit` : **Fichier → Exporter → Modèle Power BI**.
 
 **11 mesures DAX** (taux de churn, revenu mensuel à risque, gain attendu de la campagne…) sont détaillées dans le guide.
 
-Le rapport est au format **Power BI Project (`.pbip`)**, le format texte officiel de Power BI Desktop :
-le modèle (`model.bim`) et les pages (`report.json`) sont des fichiers JSON lisibles et versionnés dans Git.
-Ils sont **générés par un script** ([`powerbi/build_pbip.py`](powerbi/build_pbip.py)), et la CI vérifie que chaque visuel
-pointe vers une colonne ou une mesure qui existe, et que chaque table correspond à son CSV.
+Le rapport est **généré par un script** ([`powerbi/build_powerbi.py`](powerbi/build_powerbi.py)) en deux formats :
+le `.pbit` à ouvrir, et sa version texte au format **Power BI Project** (`powerbi/source/`), lisible et versionnée dans Git.
+La CI vérifie que chaque visuel pointe vers une colonne ou une mesure qui existe, et que chaque table correspond à son CSV.
 
-> 💡 **Pourquoi `.pbip` et pas un `.pbit` généré directement ?** Un `.pbit` contient une partie binaire (`DataMashup`)
-> au format non documenté, que Power BI vérifie à l'ouverture. Générer un `.pbit` « à la main » est fragile ;
-> le `.pbip` est le format prévu pour le code et Git, et Power BI en exporte un `.pbit` propre en un clic.
 
 ---
 
@@ -173,8 +168,8 @@ cd src
 python -m churn.train                                             # entraînement + exports Power BI (~30 s)
 python -m churn.predict ../data/raw/telco_churn.csv scores.csv    # scorer un fichier de clients
 cd ..
-python powerbi/build_pbip.py                                      # régénérer le projet Power BI
-pytest -v                                                         # 8 tests
+python powerbi/build_powerbi.py                                   # régénérer le rapport Power BI
+pytest -v                                                         # 9 tests
 ```
 
 ---
@@ -190,16 +185,15 @@ churn-prediction/
 │   ├── train.py                    Comparaison, seuil, évaluation, scores du portefeuille, exports, figures
 │   └── predict.py                  Scorer de nouveaux clients
 ├── powerbi/
-│   ├── churn_dashboard.pbip        Projet Power BI à ouvrir (3 pages, 22 visuels, 11 mesures DAX)
-│   ├── churn_dashboard.SemanticModel/   Modèle : tables, requêtes Power Query, mesures DAX (model.bim)
-│   ├── churn_dashboard.Report/          Pages et visuels (report.json)
-│   ├── build_pbip.py               Générateur du projet
+│   ├── churn_dashboard.pbit        Rapport Power BI (3 pages, 22 visuels, 11 mesures DAX, données intégrées)
+│   ├── source/                     Le même rapport au format texte (.pbip) : model.bim, report.json
+│   ├── build_powerbi.py            Générateur du rapport
 │   ├── GUIDE.md                    Mode d'emploi, mesures DAX, procédure de secours
 │   └── data/                       Tables lues par Power BI (clients, courbes, importance…)
 ├── models/model.joblib             Modèle entraîné + seuil + données de référence
 ├── reports/                        metrics.json et figures
 ├── notebooks/exploration.ipynb     Exploration des données
-├── tests/test_churn.py             8 tests : données, profit, gain, exports, cohérence du rapport Power BI
+├── tests/test_churn.py             9 tests : données, profit, gain, exports, cohérence du rapport Power BI
 ├── lancer.bat
 └── .github/workflows/ci.yml        Entraînement + génération du projet Power BI + tests à chaque push
 ```

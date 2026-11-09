@@ -81,7 +81,7 @@ def _champ(node):
 
 
 def test_projet_power_bi_valide():
-    pb = ROOT / "powerbi"
+    pb = ROOT / "powerbi" / "source"
     pbip = json.loads((pb / "churn_dashboard.pbip").read_text(encoding="utf-8"))
     assert pbip["artifacts"][0]["report"]["path"] == "churn_dashboard.Report"
     pbir = json.loads((pb / "churn_dashboard.Report" / "definition.pbir").read_text(encoding="utf-8"))
@@ -96,7 +96,7 @@ def test_projet_power_bi_valide():
 
     # chaque table lit un CSV dont les en-têtes correspondent aux colonnes du modèle
     for name, table in tables.items():
-        header = (pb / "data" / f"{name}.csv").read_text(encoding="utf-8").splitlines()[0].split(",")
+        header = (ROOT / "powerbi" / "data" / f"{name}.csv").read_text(encoding="utf-8").splitlines()[0].split(",")
         assert [c["name"] for c in table["columns"]] == header, name
 
     # chaque champ utilisé par un visuel existe dans le modèle
@@ -109,3 +109,16 @@ def test_projet_power_bi_valide():
             for sel in query["Select"]:
                 ref = _champ(sel)
                 assert (alias[ref["Expression"]["SourceRef"]["Source"]], ref["Property"]) in known, ref
+
+
+def test_pbit_identique_au_projet():
+    """Le .pbit contient le même modèle et le même rapport que le projet .pbip."""
+    pb = ROOT / "powerbi"
+    with zipfile.ZipFile(pb / "churn_dashboard.pbit") as z:
+        assert {"DataModelSchema", "Report/Layout", "Version", "[Content_Types].xml"} <= set(z.namelist())
+        model = json.loads(z.read("DataModelSchema").decode("utf-16-le"))
+        layout = json.loads(z.read("Report/Layout").decode("utf-16-le"))
+    bim = json.loads((pb / "source" / "churn_dashboard.SemanticModel" / "model.bim").read_text(encoding="utf-8"))
+    assert [t["name"] for t in model["model"]["tables"]] == [t["name"] for t in bim["model"]["tables"]]
+    assert "expressions" not in model["model"]  # aucun paramètre : les données sont intégrées
+    assert len(layout["sections"]) == 3

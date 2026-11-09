@@ -4,15 +4,12 @@
 
 Les données sont **intégrées au rapport** (compressées dans les requêtes Power Query) : aucun chemin de fichier à configurer.
 
-1. Double-cliquez sur **`powerbi/churn_dashboard.pbip`** (Power BI Desktop, Windows).
-2. Le rapport s'ouvre sans données : cliquez sur **Accueil → Actualiser**.
-3. Pour obtenir un modèle **`.pbit`** : **Fichier → Exporter → Modèle Power BI**.
-   Pour un fichier unique à partager : **Fichier → Enregistrer sous → `.pbix`**.
+1. Double-cliquez sur **`powerbi/churn_dashboard.pbit`** (Power BI Desktop, Windows).
+   ⚠️ Dézippez d'abord le projet : un fichier ouvert directement depuis un zip ne fonctionne pas.
+2. Les données se chargent toutes seules. Enregistrez ensuite en `.pbix` (**Fichier → Enregistrer sous**).
 
-Après un nouvel entraînement (`lancer.bat`), le projet est régénéré avec les nouvelles données.
-
-> Si Power BI refuse d'ouvrir le `.pbip`, vérifiez que l'option est activée :
-> **Fichier → Options et paramètres → Options → Fonctionnalités en préversion → Enregistrement de projet Power BI (.pbip)**.
+**Plan B** si le `.pbit` ne s'ouvre pas : ouvrez **`powerbi/source/churn_dashboard.pbip`** (même rapport, format texte),
+cliquez sur **Accueil → Actualiser**, puis **Fichier → Exporter → Modèle Power BI** pour obtenir un `.pbit`.
 
 ## Contenu du rapport
 
@@ -49,9 +46,9 @@ Revenu mensuel à risque    = SUMX ( clients, clients[facture_mensuelle] * clien
 Gain attendu de la campagne = CALCULATE ( SUM ( clients[gain_attendu] ), clients[cible_campagne] = "Oui" )
 ```
 
-## Plan B : recréer le rapport à la main en 15 minutes
+## Plan C : recréer le rapport à la main en 15 minutes
 
-Si le projet `.pbip` ne s'ouvre pas avec votre version de Power BI :
+Si aucun des deux fichiers ne s'ouvre avec votre version de Power BI :
 
 1. **Accueil → Obtenir les données → Texte/CSV**, et importez les 6 fichiers de `powerbi/data/`.
    Dans l'aperçu, vérifiez que l'**origine du fichier** est *65001 : Unicode (UTF-8)* pour garder les accents.
@@ -64,4 +61,4 @@ Si le projet `.pbip` ne s'ouvre pas avec votre version de Power BI :
 ## Mettre à jour les données
 
 Après un nouvel entraînement : **Accueil → Actualiser**. Les CSV sont réécrits au même endroit.
-Pour régénérer le projet Power BI lui-même : `python powerbi/build_pbip.py`.
+Pour régénérer le rapport lui-même : `python powerbi/build_powerbi.py`.
