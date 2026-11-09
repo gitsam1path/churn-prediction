@@ -17,6 +17,6 @@ echo [2/2] Generation du modele Power BI...
 ".venv\Scripts\python.exe" powerbi\build_pbip.py
 echo.
 echo Termine. Ouvrez powerbi\churn_dashboard.pbip puis cliquez sur Actualiser.
-echo Le dossier des donnees est deja renseigne : %~dp0powerbi\data
+echo Les donnees sont integrees au rapport : aucun chemin a configurer.
 echo.
 pause

@@ -2,15 +2,14 @@
 
 ## Ouvrir le rapport
 
-1. Double-cliquez sur **`lancer.bat`** à la racine du projet : il entraîne le modèle, écrit les CSV dans `powerbi/data/`
-   et génère le projet Power BI **avec le chemin de vos données déjà renseigné**.
-2. Double-cliquez sur **`powerbi/churn_dashboard.pbip`** (Power BI Desktop, Windows).
-3. Le rapport s'ouvre sans données : cliquez sur **Accueil → Actualiser**.
-4. Pour obtenir un modèle **`.pbit`** : **Fichier → Exporter → Modèle Power BI**.
+Les données sont **intégrées au rapport** (compressées dans les requêtes Power Query) : aucun chemin de fichier à configurer.
+
+1. Double-cliquez sur **`powerbi/churn_dashboard.pbip`** (Power BI Desktop, Windows).
+2. Le rapport s'ouvre sans données : cliquez sur **Accueil → Actualiser**.
+3. Pour obtenir un modèle **`.pbit`** : **Fichier → Exporter → Modèle Power BI**.
    Pour un fichier unique à partager : **Fichier → Enregistrer sous → `.pbix`**.
 
-Si le dossier a changé de place : relancez `lancer.bat`, ou **Accueil → Transformer les données → Modifier les paramètres**
-et collez le chemin complet de `powerbi\data`.
+Après un nouvel entraînement (`lancer.bat`), le projet est régénéré avec les nouvelles données.
 
 > Si Power BI refuse d'ouvrir le `.pbip`, vérifiez que l'option est activée :
 > **Fichier → Options et paramètres → Options → Fonctionnalités en préversion → Enregistrement de projet Power BI (.pbip)**.

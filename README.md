@@ -135,7 +135,7 @@ par un modèle qui ne l'a **jamais vu** pendant l'entraînement. Sinon, les scor
 
 Fichier : **[`powerbi/churn_dashboard.pbip`](powerbi/churn_dashboard.pbip)** · mode d'emploi : [`powerbi/GUIDE.md`](powerbi/GUIDE.md)
 
-Après `lancer.bat`, double-cliquez sur `churn_dashboard.pbip`, puis **Accueil → Actualiser** : le chemin des données est déjà renseigné.
+Double-cliquez sur `churn_dashboard.pbip`, puis **Accueil → Actualiser**. Les données sont **intégrées au rapport** : aucun chemin à configurer.
 Pour un modèle `.pbit` : **Fichier → Exporter → Modèle Power BI**.
 
 | Page | Contenu |

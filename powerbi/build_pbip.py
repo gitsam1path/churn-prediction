@@ -6,8 +6,8 @@ Un projet .pbip est le format texte officiel de Power BI Desktop :
   churn_dashboard.SemanticModel/model.bim   le modèle : tables, requêtes Power Query, mesures DAX
   churn_dashboard.Report/report.json        le rapport : pages et visuels
 
-Le dossier des données (paramètre « DossierDonnees ») est renseigné automatiquement
-avec le chemin réel de powerbi/data quand le script tourne sous Windows.
+Les données (CSV de powerbi/data) sont intégrées dans les requêtes Power Query :
+le rapport ne dépend d'aucun chemin de fichier.
 
 Pour obtenir un modèle .pbit : ouvrir le .pbip, actualiser, puis
 Fichier > Exporter > Modèle Power BI.
@@ -17,8 +17,9 @@ Lancer :  python powerbi/build_pbip.py
 
 from __future__ import annotations
 
+import base64
 import json
-import os
+import zlib
 import shutil
 import uuid
 from pathlib import Path
@@ -26,8 +27,6 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 NAME = "churn_dashboard"
 DATA_DIR = HERE / "data"
-# Sous Windows : le vrai chemin du projet. Ailleurs (CI) : un chemin d'exemple.
-DEFAULT_FOLDER = str(DATA_DIR) if os.name == "nt" else r"C:\churn-prediction\powerbi\data"
 
 
 def uid() -> str:
@@ -122,12 +121,20 @@ MEASURES = [
 ]
 
 
+def embedded_csv(table: str) -> str:
+    """Le CSV compressé (deflate) puis encodé en base64 : les données voyagent DANS le rapport."""
+    raw = (DATA_DIR / f"{table}.csv").read_bytes()
+    comp = zlib.compressobj(9, zlib.DEFLATED, -15)
+    return base64.b64encode(comp.compress(raw) + comp.flush()).decode("ascii")
+
+
 def m_query(table: str, cols) -> list[str]:
     types = ", ".join(f'{{"{c}", {mtype}}}' for c, _, mtype, _, _ in cols)
     return [
         "let",
-        f'    Source = Csv.Document(File.Contents(Text.TrimEnd(DossierDonnees, "\\") & "\\{table}.csv"), '
-        '[Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),',
+        # Données intégrées : aucun chemin de fichier, le rapport s'ouvre sur n'importe quel PC
+        f'    Donnees = Binary.Decompress(Binary.FromText("{embedded_csv(table)}", BinaryEncoding.Base64), Compression.Deflate),',
+        '    Source = Csv.Document(Donnees, [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),',
         "    Entetes = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),",
         # "en-US" : les CSV utilisent le point décimal, quel que soit le réglage régional du PC
         f'    Types = Table.TransformColumnTypes(Entetes, {{{types}}}, "en-US")',
@@ -171,7 +178,6 @@ def data_model() -> dict:
             table["measures"] = measures
         tables.append(table)
 
-    folder = DEFAULT_FOLDER.replace('"', '""')
     return {
         "name": uid(),
         "compatibilityLevel": 1550,
@@ -181,16 +187,8 @@ def data_model() -> dict:
             "defaultPowerBIDataSourceVersion": "powerBI_V3",
             "sourceQueryCulture": "fr-FR",
             "tables": tables,
-            "expressions": [{
-                "name": "DossierDonnees",
-                "kind": "m",
-                "expression": f'"{folder}" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]',
-                "lineageTag": uid(),
-                "annotations": [{"name": "PBI_ResultType", "value": "Text"},
-                                {"name": "PBI_NavigationStepName", "value": "Navigation"}],
-            }],
             "annotations": [
-                {"name": "PBI_QueryOrder", "value": json.dumps(["DossierDonnees", *TABLES])},
+                {"name": "PBI_QueryOrder", "value": json.dumps([*TABLES])},
                 {"name": "__PBI_TimeIntelligenceEnabled", "value": "0"},
                 # Version de Power BI Desktop « auteur » : volontairement ancienne (février 2023)
                 # pour que toute version plus récente accepte d'ouvrir le fichier.
@@ -392,4 +390,3 @@ def build(root: Path = HERE) -> Path:
 
 if __name__ == "__main__":
     print(f"Projet Power BI créé : {build()}")
-    print(f"Dossier des données  : {DATA_DIR}")
