@@ -9,4 +9,4 @@ Thumbs.db
 
 # Power BI : fichiers locaux (cache des données, réglages) ; le projet .pbip, lui, est versionné
 *.pbix
-powerbi/source/*/.pbi/
+powerbi/*/.pbi/

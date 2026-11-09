@@ -22,12 +22,9 @@ import json
 import zlib
 import shutil
 import uuid
-import zipfile
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-SOURCE = HERE / "source"                 # projet .pbip (format texte)
-PBIT = HERE / "churn_dashboard.pbit"     # modèle Power BI en un seul fichier
 NAME = "churn_dashboard"
 DATA_DIR = HERE / "data"
 
@@ -365,7 +362,7 @@ def _platform(kind: str) -> dict:
     }
 
 
-def build(root: Path = SOURCE) -> Path:
+def build(root: Path = HERE) -> Path:
     model_dir = root / f"{NAME}.SemanticModel"
     report_dir = root / f"{NAME}.Report"
     for d in (model_dir, report_dir):
@@ -391,54 +388,5 @@ def build(root: Path = SOURCE) -> Path:
     return pbip
 
 
-# ─────────────────────────────────────────────────────────────
-# 4. Le même rapport en un seul fichier .pbit
-# ─────────────────────────────────────────────────────────────
-def _utf16(obj) -> bytes:
-    text = obj if isinstance(obj, str) else json.dumps(obj, ensure_ascii=False)
-    return text.encode("utf-16-le")
-
-
-CONTENT_TYPES = (
-    '<?xml version="1.0" encoding="utf-8"?>'
-    '<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">'
-    '<Default Extension="json" ContentType="" />'
-    '<Override PartName="/Version" ContentType="" />'
-    '<Override PartName="/DataModelSchema" ContentType="" />'
-    '<Override PartName="/DiagramLayout" ContentType="" />'
-    '<Override PartName="/Report/Layout" ContentType="" />'
-    '<Override PartName="/Settings" ContentType="application/json" />'
-    '<Override PartName="/Metadata" ContentType="application/json" />'
-    "</Types>"
-)
-
-
-def build_pbit(path: Path = PBIT) -> Path:
-    diagram = {
-        "version": "1.1.0",
-        "diagrams": [{"ordinal": 0, "scrollPosition": {"x": 0, "y": 0}, "nodes": [], "name": "All tables",
-                      "zoomValue": 100, "pinKeyFieldsToTop": False, "showExtraHeaderInfo": False,
-                      "hideKeyFieldsWhenCollapsed": False, "tablesLocked": False}],
-        "selectedDiagram": "All tables",
-        "defaultDiagram": "All tables",
-    }
-    settings = {"Version": 1, "ReportSettings": {},
-                "QueriesSettings": {"TypeDetectionEnabled": True, "RelationshipImportEnabled": True,
-                                    "RunBackgroundAnalysis": True}}
-    metadata = {"Version": 5, "AutoCreatedRelationships": [],
-                "FileDescription": "Tableau de bord de prédiction du churn (données intégrées).",
-                "CreatedFrom": "Desktop", "CreatedFromRelease": "2023.02"}
-    with zipfile.ZipFile(path, "w", zipfile.ZIP_DEFLATED) as z:
-        z.writestr("[Content_Types].xml", CONTENT_TYPES.encode("utf-8"))
-        z.writestr("Version", _utf16("1.25"))
-        z.writestr("DataModelSchema", _utf16(data_model()))
-        z.writestr("DiagramLayout", _utf16(diagram))
-        z.writestr("Report/Layout", _utf16(layout()))
-        z.writestr("Settings", _utf16(settings))
-        z.writestr("Metadata", _utf16(metadata))
-    return path
-
-
 if __name__ == "__main__":
-    print(f"Modèle Power BI créé : {build_pbit()}")
-    print(f"Projet source (.pbip) : {build()}")
+    print(f"Projet Power BI créé : {build()}")

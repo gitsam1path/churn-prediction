@@ -1,11 +1,11 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
   "metadata": {
-    "type": "SemanticModel",
+    "type": "Report",
     "displayName": "churn_dashboard"
   },
   "config": {
     "version": "2.0",
-    "logicalId": "9926d401-a9fb-40ca-9ef9-553a2387e305"
+    "logicalId": "bb4d17b4-dd5a-4890-b036-5cb82f525f32"
   }
 }
