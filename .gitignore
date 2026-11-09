@@ -7,5 +7,6 @@ venv/
 .DS_Store
 Thumbs.db
 
-# Fichiers Power BI enregistrés localement (le modèle .pbit, lui, est versionné)
+# Power BI : fichiers locaux (cache des données, réglages) ; le projet .pbip, lui, est versionné
 *.pbix
+powerbi/*/.pbi/

@@ -1,0 +1,942 @@
+{
+  "name": "4a48fc39-2f3e-4d45-9b45-512abf9bbb76",
+  "compatibilityLevel": 1550,
+  "model": {
+    "culture": "fr-FR",
+    "dataAccessOptions": {
+      "legacyRedirects": true,
+      "returnErrorValuesAsNull": true
+    },
+    "defaultPowerBIDataSourceVersion": "powerBI_V3",
+    "sourceQueryCulture": "fr-FR",
+    "tables": [
+      {
+        "name": "clients",
+        "lineageTag": "859c4fc9-3699-49f5-a588-3e669ed378e3",
+        "columns": [
+          {
+            "name": "id_client",
+            "dataType": "string",
+            "sourceColumn": "id_client",
+            "lineageTag": "cbc59f26-6fff-4f6c-bc8f-c3ffc5b261ae",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "genre",
+            "dataType": "string",
+            "sourceColumn": "genre",
+            "lineageTag": "5ca378b3-08c6-4d0b-bb49-7b981b94ce63",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "senior",
+            "dataType": "string",
+            "sourceColumn": "senior",
+            "lineageTag": "6fdafa92-d514-4b10-acfd-3d9d0e5e71d9",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "en_couple",
+            "dataType": "string",
+            "sourceColumn": "en_couple",
+            "lineageTag": "8f1dfe77-094f-45fb-bb33-fd379858df3d",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "personnes_a_charge",
+            "dataType": "string",
+            "sourceColumn": "personnes_a_charge",
+            "lineageTag": "09ffd308-cedb-4179-9421-1a38a689a66c",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "anciennete_mois",
+            "dataType": "int64",
+            "sourceColumn": "anciennete_mois",
+            "lineageTag": "67b0086d-0f74-4f64-84fa-d157af149d9a",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "formatString": "0"
+          },
+          {
+            "name": "tranche_anciennete",
+            "dataType": "string",
+            "sourceColumn": "tranche_anciennete",
+            "lineageTag": "f575a2de-c0ad-4713-b47b-7e30427c6d61",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "sortByColumn": "tranche_ordre"
+          },
+          {
+            "name": "tranche_ordre",
+            "dataType": "int64",
+            "sourceColumn": "tranche_ordre",
+            "lineageTag": "9dc184a4-2586-4d21-9b5e-0b6efdcae539",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "formatString": "0",
+            "isHidden": true
+          },
+          {
+            "name": "contrat",
+            "dataType": "string",
+            "sourceColumn": "contrat",
+            "lineageTag": "850461e6-2181-4034-b6bf-e593712d25c9",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "internet",
+            "dataType": "string",
+            "sourceColumn": "internet",
+            "lineageTag": "f200593a-c53d-4454-bac7-75fa1cf19ccd",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "moyen_paiement",
+            "dataType": "string",
+            "sourceColumn": "moyen_paiement",
+            "lineageTag": "61aeee9c-ebe3-4d56-b4ef-334f6c7e8cd2",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "facture_dematerialisee",
+            "dataType": "string",
+            "sourceColumn": "facture_dematerialisee",
+            "lineageTag": "b75225d7-5b4f-4a51-b2f5-8d7033d423fc",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "nb_services",
+            "dataType": "int64",
+            "sourceColumn": "nb_services",
+            "lineageTag": "6cd1d26c-8805-46f0-bb47-f366a30d5d84",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "formatString": "0"
+          },
+          {
+            "name": "support_technique",
+            "dataType": "string",
+            "sourceColumn": "support_technique",
+            "lineageTag": "e0d675a2-1546-4926-a4b9-18bfa5962a64",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "securite_en_ligne",
+            "dataType": "string",
+            "sourceColumn": "securite_en_ligne",
+            "lineageTag": "e05ddcbf-92bc-4d0a-b4dd-1c31ddfc5eae",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "facture_mensuelle",
+            "dataType": "double",
+            "sourceColumn": "facture_mensuelle",
+            "lineageTag": "a12e94ee-47a4-4b15-b8f1-be2edf572dc2",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "formatString": "#,0.00 $"
+          },
+          {
+            "name": "total_facture",
+            "dataType": "double",
+            "sourceColumn": "total_facture",
+            "lineageTag": "1d7c1a25-69bd-4beb-a280-2ba92468bf12",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "formatString": "#,0 $"
+          },
+          {
+            "name": "valeur_annuelle",
+            "dataType": "double",
+            "sourceColumn": "valeur_annuelle",
+            "lineageTag": "bdb0f73e-2adb-4796-a698-40da04addeab",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "formatString": "#,0 $"
+          },
+          {
+            "name": "churn",
+            "dataType": "int64",
+            "sourceColumn": "churn",
+            "lineageTag": "5ff8cd36-2eff-4155-b82a-c6124bc99604",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "formatString": "0"
+          },
+          {
+            "name": "churn_reel",
+            "dataType": "string",
+            "sourceColumn": "churn_reel",
+            "lineageTag": "e72fd2b7-26e4-4bc6-8dbc-c4a790832ca1",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "probabilite_churn",
+            "dataType": "double",
+            "sourceColumn": "probabilite_churn",
+            "lineageTag": "c83ee7a0-474c-4559-9694-33cd3e1d7759",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "formatString": "0.0 %"
+          },
+          {
+            "name": "segment_risque",
+            "dataType": "string",
+            "sourceColumn": "segment_risque",
+            "lineageTag": "28be32d0-0cef-4b6c-9ac1-416e6e64d71d",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "cible_campagne",
+            "dataType": "string",
+            "sourceColumn": "cible_campagne",
+            "lineageTag": "8f93217f-5eda-40fd-82cb-0d237c47c6e7",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "gain_attendu",
+            "dataType": "double",
+            "sourceColumn": "gain_attendu",
+            "lineageTag": "664c3c9e-0443-4b6a-9c33-f29e63ee3cbb",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "formatString": "#,0 $"
+          },
+          {
+            "name": "motif_1",
+            "dataType": "string",
+            "sourceColumn": "motif_1",
+            "lineageTag": "3cf8b597-6598-4e3d-9081-fa5258d1e5bc",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "motif_2",
+            "dataType": "string",
+            "sourceColumn": "motif_2",
+            "lineageTag": "ef9f134c-1e82-4865-9529-7898f7a8799c",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          }
+        ],
+        "partitions": [
+          {
+            "name": "clients",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = Csv.Document(File.Contents(Text.TrimEnd(DossierDonnees, \"\\\") & \"\\clients.csv\"), [Delimiter=\",\", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),",
+                "    Entetes = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),",
+                "    Types = Table.TransformColumnTypes(Entetes, {{\"id_client\", type text}, {\"genre\", type text}, {\"senior\", type text}, {\"en_couple\", type text}, {\"personnes_a_charge\", type text}, {\"anciennete_mois\", Int64.Type}, {\"tranche_anciennete\", type text}, {\"tranche_ordre\", Int64.Type}, {\"contrat\", type text}, {\"internet\", type text}, {\"moyen_paiement\", type text}, {\"facture_dematerialisee\", type text}, {\"nb_services\", Int64.Type}, {\"support_technique\", type text}, {\"securite_en_ligne\", type text}, {\"facture_mensuelle\", type number}, {\"total_facture\", type number}, {\"valeur_annuelle\", type number}, {\"churn\", Int64.Type}, {\"churn_reel\", type text}, {\"probabilite_churn\", type number}, {\"segment_risque\", type text}, {\"cible_campagne\", type text}, {\"gain_attendu\", type number}, {\"motif_1\", type text}, {\"motif_2\", type text}}, \"en-US\")",
+                "in",
+                "    Types"
+              ]
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          }
+        ],
+        "measures": [
+          {
+            "name": "Nb clients",
+            "expression": "COUNTROWS ( clients )",
+            "formatString": "#,0",
+            "lineageTag": "b65798d5-1e2c-41ab-890a-3e00d712c8eb"
+          },
+          {
+            "name": "Nb départs",
+            "expression": "SUM ( clients[churn] )",
+            "formatString": "#,0",
+            "lineageTag": "4699decb-4879-48af-875e-dadd87a3ee9e"
+          },
+          {
+            "name": "Taux de churn",
+            "expression": "DIVIDE ( [Nb départs], [Nb clients] )",
+            "formatString": "0.0 %",
+            "lineageTag": "e73aa0e7-830b-4f36-b3d3-0186d92fa079"
+          },
+          {
+            "name": "Revenu mensuel",
+            "expression": "SUM ( clients[facture_mensuelle] )",
+            "formatString": "#,0 $",
+            "lineageTag": "a58928d3-65fa-40ff-8bcd-aed910f6b03b"
+          },
+          {
+            "name": "Revenu mensuel perdu",
+            "expression": "CALCULATE ( SUM ( clients[facture_mensuelle] ), clients[churn] = 1 )",
+            "formatString": "#,0 $",
+            "lineageTag": "3da31b2d-e4a6-4d6e-9032-e4513f1b87db"
+          },
+          {
+            "name": "Part du revenu perdu",
+            "expression": "DIVIDE ( [Revenu mensuel perdu], [Revenu mensuel] )",
+            "formatString": "0.0 %",
+            "lineageTag": "26a501a8-e80e-4a11-a21d-5d4bc2040ae5"
+          },
+          {
+            "name": "Probabilité moyenne",
+            "expression": "AVERAGE ( clients[probabilite_churn] )",
+            "formatString": "0.0 %",
+            "lineageTag": "fc956e97-dce5-40a3-adf4-0aa6b89aaef1"
+          },
+          {
+            "name": "Clients à risque élevé",
+            "expression": "CALCULATE ( [Nb clients], clients[segment_risque] = \"Élevé\" )",
+            "formatString": "#,0",
+            "lineageTag": "d85010bd-4ab9-4bdd-a11d-46fa0b5cf1c8"
+          },
+          {
+            "name": "Clients ciblés",
+            "expression": "CALCULATE ( [Nb clients], clients[cible_campagne] = \"Oui\" )",
+            "formatString": "#,0",
+            "lineageTag": "d2111ee9-72b1-4a1b-9e64-c4bf22e82a69"
+          },
+          {
+            "name": "Revenu mensuel à risque",
+            "expression": "SUMX ( clients, clients[facture_mensuelle] * clients[probabilite_churn] )",
+            "formatString": "#,0 $",
+            "lineageTag": "fd143abf-30a5-4ea2-b8f1-bb1c602fb7f9"
+          },
+          {
+            "name": "Gain attendu de la campagne",
+            "expression": "CALCULATE ( SUM ( clients[gain_attendu] ), clients[cible_campagne] = \"Oui\" )",
+            "formatString": "#,0 $",
+            "lineageTag": "336e1468-aa46-4427-aad2-883af7bbb98c"
+          }
+        ]
+      },
+      {
+        "name": "comparaison_modeles",
+        "lineageTag": "a477504a-22c5-470f-9baa-32a2fb5203aa",
+        "columns": [
+          {
+            "name": "modele",
+            "dataType": "string",
+            "sourceColumn": "modele",
+            "lineageTag": "99833b61-769c-4793-a63f-ba6a6fa5469a",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "roc_auc",
+            "dataType": "double",
+            "sourceColumn": "roc_auc",
+            "lineageTag": "88d07b60-6361-4541-af54-d45c805a5ea7",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "formatString": "0.000"
+          },
+          {
+            "name": "roc_auc_ecart_type",
+            "dataType": "double",
+            "sourceColumn": "roc_auc_ecart_type",
+            "lineageTag": "6a3393da-3fba-4874-b190-dcf0a5f000a8",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "formatString": "0.000"
+          },
+          {
+            "name": "pr_auc",
+            "dataType": "double",
+            "sourceColumn": "pr_auc",
+            "lineageTag": "b21d74be-b192-4cee-a8f6-b559b311a525",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "formatString": "0.000"
+          },
+          {
+            "name": "profit_cv",
+            "dataType": "double",
+            "sourceColumn": "profit_cv",
+            "lineageTag": "1e8f0763-516f-475a-95dd-af2a467527d7",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "formatString": "#,0 $"
+          },
+          {
+            "name": "retenu",
+            "dataType": "boolean",
+            "sourceColumn": "retenu",
+            "lineageTag": "f01b219e-ab80-4723-8ff7-f749fd21db84",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          }
+        ],
+        "partitions": [
+          {
+            "name": "comparaison_modeles",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = Csv.Document(File.Contents(Text.TrimEnd(DossierDonnees, \"\\\") & \"\\comparaison_modeles.csv\"), [Delimiter=\",\", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),",
+                "    Entetes = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),",
+                "    Types = Table.TransformColumnTypes(Entetes, {{\"modele\", type text}, {\"roc_auc\", type number}, {\"roc_auc_ecart_type\", type number}, {\"pr_auc\", type number}, {\"profit_cv\", type number}, {\"retenu\", type logical}}, \"en-US\")",
+                "in",
+                "    Types"
+              ]
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          }
+        ]
+      },
+      {
+        "name": "importance_variables",
+        "lineageTag": "94c12a76-bf98-4759-b5c8-9cfc3af8e88c",
+        "columns": [
+          {
+            "name": "variable",
+            "dataType": "string",
+            "sourceColumn": "variable",
+            "lineageTag": "e6344634-a7b2-4e86-9ed0-f2acfa2811da",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "importance",
+            "dataType": "double",
+            "sourceColumn": "importance",
+            "lineageTag": "2f1d3700-ed04-41fb-8fe8-c5f820041668",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "formatString": "0.000"
+          },
+          {
+            "name": "libelle",
+            "dataType": "string",
+            "sourceColumn": "libelle",
+            "lineageTag": "80d3226b-9e85-45be-b47e-53049c5e534a",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          }
+        ],
+        "partitions": [
+          {
+            "name": "importance_variables",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = Csv.Document(File.Contents(Text.TrimEnd(DossierDonnees, \"\\\") & \"\\importance_variables.csv\"), [Delimiter=\",\", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),",
+                "    Entetes = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),",
+                "    Types = Table.TransformColumnTypes(Entetes, {{\"variable\", type text}, {\"importance\", type number}, {\"libelle\", type text}}, \"en-US\")",
+                "in",
+                "    Types"
+              ]
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          }
+        ]
+      },
+      {
+        "name": "courbe_profit",
+        "lineageTag": "1ac364c5-f0ca-4ac3-8406-eab8d64fa08e",
+        "columns": [
+          {
+            "name": "seuil",
+            "dataType": "double",
+            "sourceColumn": "seuil",
+            "lineageTag": "0fd9abf1-1756-4e7d-b774-cad022aa2799",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "formatString": "0.00"
+          },
+          {
+            "name": "clients_cibles",
+            "dataType": "int64",
+            "sourceColumn": "clients_cibles",
+            "lineageTag": "f2281487-53a2-4ba8-8a2e-c80b4f8c0445",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "formatString": "#,0"
+          },
+          {
+            "name": "churners_cibles",
+            "dataType": "int64",
+            "sourceColumn": "churners_cibles",
+            "lineageTag": "83a84c9c-ad3d-46f7-a861-d210f8321b88",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "formatString": "#,0"
+          },
+          {
+            "name": "gain",
+            "dataType": "double",
+            "sourceColumn": "gain",
+            "lineageTag": "daf91181-212a-4a9d-950c-faa264dba590",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "formatString": "#,0 $"
+          },
+          {
+            "name": "cout",
+            "dataType": "double",
+            "sourceColumn": "cout",
+            "lineageTag": "bee27522-27c4-4a91-ab5d-2fcab83836a4",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "formatString": "#,0 $"
+          },
+          {
+            "name": "profit",
+            "dataType": "double",
+            "sourceColumn": "profit",
+            "lineageTag": "f78c4750-9331-421b-87eb-15193f95ba93",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "formatString": "#,0 $"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "courbe_profit",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = Csv.Document(File.Contents(Text.TrimEnd(DossierDonnees, \"\\\") & \"\\courbe_profit.csv\"), [Delimiter=\",\", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),",
+                "    Entetes = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),",
+                "    Types = Table.TransformColumnTypes(Entetes, {{\"seuil\", type number}, {\"clients_cibles\", Int64.Type}, {\"churners_cibles\", Int64.Type}, {\"gain\", type number}, {\"cout\", type number}, {\"profit\", type number}}, \"en-US\")",
+                "in",
+                "    Types"
+              ]
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          }
+        ]
+      },
+      {
+        "name": "courbe_gain",
+        "lineageTag": "af46977a-9a1b-486f-b3b4-d1eba596a392",
+        "columns": [
+          {
+            "name": "part_clients_contactes",
+            "dataType": "double",
+            "sourceColumn": "part_clients_contactes",
+            "lineageTag": "48ff0f2e-d428-465c-bc60-8daae244afe6",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "formatString": "0 %"
+          },
+          {
+            "name": "part_departs_captes",
+            "dataType": "double",
+            "sourceColumn": "part_departs_captes",
+            "lineageTag": "11eaca87-7375-40b4-8bce-bae040ea5606",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "formatString": "0 %"
+          },
+          {
+            "name": "part_aleatoire",
+            "dataType": "double",
+            "sourceColumn": "part_aleatoire",
+            "lineageTag": "7b540650-3142-4c46-a543-a0755046a884",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "formatString": "0 %"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "courbe_gain",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = Csv.Document(File.Contents(Text.TrimEnd(DossierDonnees, \"\\\") & \"\\courbe_gain.csv\"), [Delimiter=\",\", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),",
+                "    Entetes = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),",
+                "    Types = Table.TransformColumnTypes(Entetes, {{\"part_clients_contactes\", type number}, {\"part_departs_captes\", type number}, {\"part_aleatoire\", type number}}, \"en-US\")",
+                "in",
+                "    Types"
+              ]
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          }
+        ]
+      },
+      {
+        "name": "parametres",
+        "lineageTag": "2537d170-64f1-4a6c-afc9-f91ff821b586",
+        "columns": [
+          {
+            "name": "seuil_campagne",
+            "dataType": "double",
+            "sourceColumn": "seuil_campagne",
+            "lineageTag": "a91185e4-e6b3-4ee4-9121-ae9f97376ebd",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "formatString": "0.00"
+          },
+          {
+            "name": "cout_offre",
+            "dataType": "double",
+            "sourceColumn": "cout_offre",
+            "lineageTag": "09438afe-c8cc-40c2-982b-8eb5792a7015",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "formatString": "#,0 $"
+          },
+          {
+            "name": "taux_succes",
+            "dataType": "double",
+            "sourceColumn": "taux_succes",
+            "lineageTag": "685cbef4-03c1-4c2a-824e-0fdee54d282c",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "formatString": "0 %"
+          },
+          {
+            "name": "mois_valeur",
+            "dataType": "int64",
+            "sourceColumn": "mois_valeur",
+            "lineageTag": "5b7808a6-77a3-4ce1-b439-f528d0addb8d",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "formatString": "0"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "parametres",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = Csv.Document(File.Contents(Text.TrimEnd(DossierDonnees, \"\\\") & \"\\parametres.csv\"), [Delimiter=\",\", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),",
+                "    Entetes = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),",
+                "    Types = Table.TransformColumnTypes(Entetes, {{\"seuil_campagne\", type number}, {\"cout_offre\", type number}, {\"taux_succes\", type number}, {\"mois_valeur\", Int64.Type}}, \"en-US\")",
+                "in",
+                "    Types"
+              ]
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          }
+        ]
+      }
+    ],
+    "expressions": [
+      {
+        "name": "DossierDonnees",
+        "kind": "m",
+        "expression": "\"C:\\churn-prediction\\powerbi\\data\" meta [IsParameterQuery=true, Type=\"Text\", IsParameterQueryRequired=true]",
+        "lineageTag": "a09d70b2-a3b1-4cf8-a8d4-4efbf5f11c71",
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Text"
+          },
+          {
+            "name": "PBI_NavigationStepName",
+            "value": "Navigation"
+          }
+        ]
+      }
+    ],
+    "annotations": [
+      {
+        "name": "PBI_QueryOrder",
+        "value": "[\"DossierDonnees\", \"clients\", \"comparaison_modeles\", \"importance_variables\", \"courbe_profit\", \"courbe_gain\", \"parametres\"]"
+      },
+      {
+        "name": "__PBI_TimeIntelligenceEnabled",
+        "value": "0"
+      },
+      {
+        "name": "PBIDesktopVersion",
+        "value": "2.114.322.0 (23.02)"
+      }
+    ]
+  }
+}

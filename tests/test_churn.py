@@ -68,28 +68,44 @@ def test_exports_powerbi():
     assert top["motif_1"].notna().all()
 
 
-def test_pbit_valide():
-    path = ROOT / "powerbi" / "churn_dashboard.pbit"
-    with zipfile.ZipFile(path) as z:
-        assert {"DataModelSchema", "Report/Layout", "Version", "[Content_Types].xml"} <= set(z.namelist())
-        model = json.loads(z.read("DataModelSchema").decode("utf-16-le"))
-        layout = json.loads(z.read("Report/Layout").decode("utf-16-le"))
-    tables = {t["name"] for t in model["model"]["tables"]}
-    assert {"clients", "courbe_profit", "importance_variables"} <= tables
-    assert len(layout["sections"]) == 3
+def _champ(node):
+    """Trouve la référence {Expression: {SourceRef}, Property} dans une sélection de visuel."""
+    if isinstance(node, dict):
+        if "Property" in node and "SourceRef" in node.get("Expression", {}):
+            return node
+        for value in node.values():
+            found = _champ(value)
+            if found:
+                return found
+    return None
 
 
-def test_pbit_datamashup_concorde_avec_le_modele():
-    """Power BI refuse le fichier si les requêtes de DataMashup et du modèle diffèrent."""
-    import io
-    import struct
-    with zipfile.ZipFile(ROOT / "powerbi" / "churn_dashboard.pbit") as z:
-        mashup = z.read("DataMashup")
-        model = json.loads(z.read("DataModelSchema").decode("utf-16-le"))
-    (taille,) = struct.unpack_from("<I", mashup, 4)
-    section = zipfile.ZipFile(io.BytesIO(mashup[8:8 + taille])).read("Formulas/Section1.m").decode("utf-8-sig")
-    assert section.startswith("section Section1;")
-    assert "shared DossierDonnees" in section
-    for table in model["model"]["tables"]:
-        expression = "\n".join(table["partitions"][0]["source"]["expression"])
-        assert f"shared {table['name']} = {expression};" in section
+def test_projet_power_bi_valide():
+    pb = ROOT / "powerbi"
+    pbip = json.loads((pb / "churn_dashboard.pbip").read_text(encoding="utf-8"))
+    assert pbip["artifacts"][0]["report"]["path"] == "churn_dashboard.Report"
+    pbir = json.loads((pb / "churn_dashboard.Report" / "definition.pbir").read_text(encoding="utf-8"))
+    assert pbir["version"] == "1.0"  # 1.0 = rapport stocké dans report.json
+    assert (pb / pbir["datasetReference"]["byPath"]["path"].replace("../", "") / "definition.pbism").exists()
+
+    model = json.loads((pb / "churn_dashboard.SemanticModel" / "model.bim").read_text(encoding="utf-8"))
+    report = json.loads((pb / "churn_dashboard.Report" / "report.json").read_text(encoding="utf-8"))
+    tables = {t["name"]: t for t in model["model"]["tables"]}
+    assert {"clients", "courbe_profit", "importance_variables"} <= set(tables)
+    assert len(report["sections"]) == 3
+
+    # chaque table lit un CSV dont les en-têtes correspondent aux colonnes du modèle
+    for name, table in tables.items():
+        header = (pb / "data" / f"{name}.csv").read_text(encoding="utf-8").splitlines()[0].split(",")
+        assert [c["name"] for c in table["columns"]] == header, name
+
+    # chaque champ utilisé par un visuel existe dans le modèle
+    known = {(t, c["name"]) for t, tab in tables.items() for c in tab["columns"]}
+    known |= {(t, m["name"]) for t, tab in tables.items() for m in tab.get("measures", [])}
+    for section in report["sections"]:
+        for visual in section["visualContainers"]:
+            query = json.loads(visual["config"])["singleVisual"]["prototypeQuery"]
+            alias = {f["Name"]: f["Entity"] for f in query["From"]}
+            for sel in query["Select"]:
+                ref = _champ(sel)
+                assert (alias[ref["Expression"]["SourceRef"]["Source"]], ref["Property"]) in known, ref

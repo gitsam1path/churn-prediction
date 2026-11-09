@@ -1,15 +1,19 @@
 # Tableau de bord Power BI — mode d'emploi
 
-## Ouvrir le modèle `churn_dashboard.pbit`
+## Ouvrir le rapport
 
-1. Lancez l'entraînement au moins une fois (`cd src && python -m churn.train`) : il crée les CSV dans `powerbi/data/`.
-   *Les CSV sont déjà fournis dans le dépôt : cette étape n'est utile que si vous modifiez le modèle.*
-2. Double-cliquez sur **`powerbi/churn_dashboard.pbit`** (Power BI Desktop, Windows).
-3. Power BI demande le paramètre **DossierDonnees** : collez le chemin **complet** du dossier `powerbi\data`,
-   par exemple `C:\Users\vous\Documents\churn-prediction\powerbi\data`, puis **Charger**.
-4. Enregistrez le résultat en `.pbix` (Fichier → Enregistrer sous).
+1. Double-cliquez sur **`lancer.bat`** à la racine du projet : il entraîne le modèle, écrit les CSV dans `powerbi/data/`
+   et génère le projet Power BI **avec le chemin de vos données déjà renseigné**.
+2. Double-cliquez sur **`powerbi/churn_dashboard.pbip`** (Power BI Desktop, Windows).
+3. Le rapport s'ouvre sans données : cliquez sur **Accueil → Actualiser**.
+4. Pour obtenir un modèle **`.pbit`** : **Fichier → Exporter → Modèle Power BI**.
+   Pour un fichier unique à partager : **Fichier → Enregistrer sous → `.pbix`**.
 
-Pour changer de dossier plus tard : **Accueil → Transformer les données → Modifier les paramètres**.
+Si le dossier a changé de place : relancez `lancer.bat`, ou **Accueil → Transformer les données → Modifier les paramètres**
+et collez le chemin complet de `powerbi\data`.
+
+> Si Power BI refuse d'ouvrir le `.pbip`, vérifiez que l'option est activée :
+> **Fichier → Options et paramètres → Options → Fonctionnalités en préversion → Enregistrement de projet Power BI (.pbip)**.
 
 ## Contenu du rapport
 
@@ -46,9 +50,9 @@ Revenu mensuel à risque    = SUMX ( clients, clients[facture_mensuelle] * clien
 Gain attendu de la campagne = CALCULATE ( SUM ( clients[gain_attendu] ), clients[cible_campagne] = "Oui" )
 ```
 
-## Si le modèle `.pbit` ne s'ouvre pas : recréer le rapport en 15 minutes
+## Plan B : recréer le rapport à la main en 15 minutes
 
-Le fichier `.pbit` est généré par un script (`powerbi/build_pbit.py`). Si votre version de Power BI le refuse :
+Si le projet `.pbip` ne s'ouvre pas avec votre version de Power BI :
 
 1. **Accueil → Obtenir les données → Texte/CSV**, et importez les 6 fichiers de `powerbi/data/`.
    Dans l'aperçu, vérifiez que l'**origine du fichier** est *65001 : Unicode (UTF-8)* pour garder les accents.
@@ -61,4 +65,4 @@ Le fichier `.pbit` est généré par un script (`powerbi/build_pbit.py`). Si vot
 ## Mettre à jour les données
 
 Après un nouvel entraînement : **Accueil → Actualiser**. Les CSV sont réécrits au même endroit.
-Pour régénérer le modèle `.pbit` lui-même : `python powerbi/build_pbit.py`.
+Pour régénérer le projet Power BI lui-même : `python powerbi/build_pbip.py`.

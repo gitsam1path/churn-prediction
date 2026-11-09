@@ -1,0 +1,9 @@
+{
+  "version": "1.0",
+  "datasetReference": {
+    "byPath": {
+      "path": "../churn_dashboard.SemanticModel"
+    },
+    "byConnection": null
+  }
+}

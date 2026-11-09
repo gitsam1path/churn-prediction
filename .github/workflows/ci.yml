@@ -22,8 +22,8 @@ jobs:
       - name: Entraîner le modèle et exporter les données Power BI
         run: cd src && python -m churn.train
 
-      - name: Générer le modèle Power BI (.pbit)
-        run: python powerbi/build_pbit.py
+      - name: Générer le projet Power BI (.pbip)
+        run: python powerbi/build_pbip.py
 
       - name: Lancer les tests
         run: pytest -v

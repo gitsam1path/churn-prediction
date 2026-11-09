@@ -14,9 +14,9 @@ pushd src
 "..\.venv\Scripts\python.exe" -m churn.train || (popd & pause & exit /b 1)
 popd
 echo [2/2] Generation du modele Power BI...
-".venv\Scripts\python.exe" powerbi\build_pbit.py
+".venv\Scripts\python.exe" powerbi\build_pbip.py
 echo.
-echo Termine. Ouvrez powerbi\churn_dashboard.pbit et indiquez ce dossier :
-echo   %~dp0powerbi\data
+echo Termine. Ouvrez powerbi\churn_dashboard.pbip puis cliquez sur Actualiser.
+echo Le dossier des donnees est deja renseigne : %~dp0powerbi\data
 echo.
 pause

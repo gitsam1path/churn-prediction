@@ -1,32 +1,33 @@
 """
-Génère le modèle Power BI churn_dashboard.pbit à partir des CSV de powerbi/data/.
+Génère le projet Power BI « churn_dashboard » au format Power BI Project (.pbip).
 
-Un fichier .pbit est une archive ZIP qui contient :
-  - DataModelSchema : le modèle de données (tables, types, requêtes Power Query, mesures DAX), en JSON ;
-  - Report/Layout   : les pages du rapport et leurs visuels, en JSON ;
-  - DiagramLayout, Settings, Metadata, Version, [Content_Types].xml : métadonnées.
-Les fichiers JSON sont encodés en UTF-16 LE, comme ceux produits par Power BI Desktop.
+Un projet .pbip est le format texte officiel de Power BI Desktop :
+  churn_dashboard.pbip                      le fichier à ouvrir (double-clic)
+  churn_dashboard.SemanticModel/model.bim   le modèle : tables, requêtes Power Query, mesures DAX
+  churn_dashboard.Report/report.json        le rapport : pages et visuels
 
-À l'ouverture, Power BI demande le paramètre « DossierDonnees » (le chemin du dossier powerbi/data),
-puis charge les CSV.
+Le dossier des données (paramètre « DossierDonnees ») est renseigné automatiquement
+avec le chemin réel de powerbi/data quand le script tourne sous Windows.
 
-Lancer :  python powerbi/build_pbit.py
+Pour obtenir un modèle .pbit : ouvrir le .pbip, actualiser, puis
+Fichier > Exporter > Modèle Power BI.
+
+Lancer :  python powerbi/build_pbip.py
 """
 
 from __future__ import annotations
 
-import io
 import json
-import struct
+import os
+import shutil
 import uuid
-import zipfile
-from datetime import datetime, timezone
 from pathlib import Path
-from xml.sax.saxutils import escape as xml_escape
 
 HERE = Path(__file__).resolve().parent
-OUT = HERE / "churn_dashboard.pbit"
-DEFAULT_FOLDER = r"C:\churn-prediction\powerbi\data"
+NAME = "churn_dashboard"
+DATA_DIR = HERE / "data"
+# Sous Windows : le vrai chemin du projet. Ailleurs (CI) : un chemin d'exemple.
+DEFAULT_FOLDER = str(DATA_DIR) if os.name == "nt" else r"C:\churn-prediction\powerbi\data"
 
 
 def uid() -> str:
@@ -344,147 +345,51 @@ def layout() -> dict:
     }
 
 
-# ─────────────────────────────────────────────────────────────
-# 2 bis. DataMashup : les requêtes Power Query au format binaire
-# ─────────────────────────────────────────────────────────────
-# Power BI garde les requêtes à deux endroits : dans DataModelSchema et dans
-# DataMashup (format « MS-QDEFF »). Il vérifie que les deux concordent ;
-# sans DataMashup, il refuse d'ouvrir le fichier (MashupValidationError).
-#
-# Structure de DataMashup (entiers sur 4 octets, petit-boutiste) :
-#   version (0) | taille + zip des formules | taille + XML des permissions
-#   | taille + métadonnées | taille + liaisons de permissions (vide ici)
-BOM = b"\xef\xbb\xbf"
-
-
-def _zip_bytes(files: dict[str, bytes]) -> bytes:
-    buf = io.BytesIO()
-    with zipfile.ZipFile(buf, "w", zipfile.ZIP_DEFLATED) as z:
-        for name, data in files.items():
-            z.writestr(name, data)
-    return buf.getvalue()
-
-
-def _section_m(param_expr: str) -> str:
-    parts = ["section Section1;", "", f"shared DossierDonnees = {param_expr};"]
-    for name, cols in TABLES.items():
-        parts += ["", f"shared {name} = " + "\n".join(m_query(name, cols)) + ";"]
-    return "\r\n".join(parts) + "\r\n"
-
-
-def _entry(t: str, v: str) -> str:
-    return f'<Entry Type="{t}" Value="{xml_escape(v, {chr(34): "&quot;"})}" />'
-
-
-def _item(path: str, entries: list[str], kind: str = "Formula") -> str:
-    loc = f"<ItemPath>{path}</ItemPath>" if path else "<ItemPath />"
-    body = "<StableEntries>" + "".join(entries) + "</StableEntries>" if entries else "<StableEntries />"
-    return f"<Item><ItemLocation><ItemType>{kind}</ItemType>{loc}</ItemLocation>{body}</Item>"
-
-
-def data_mashup(param_expr: str) -> bytes:
-    now = "d" + datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.0000000Z")
-    formulas = _zip_bytes({
-        "[Content_Types].xml": BOM + (
-            '<?xml version="1.0" encoding="utf-8"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">'
-            '<Default Extension="xml" ContentType="text/xml" /><Default Extension="m" ContentType="application/x-ms-m" /></Types>'
-        ).encode(),
-        "Config/Package.xml": BOM + (
-            '<?xml version="1.0" encoding="utf-8"?><Package xmlns:xsd="http://www.w3.org/2001/XMLSchema" '
-            'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><Version>2.114.322.0</Version>'
-            '<MinVersion>1.5.3296.0</MinVersion><Culture>fr-FR</Culture></Package>'
-        ).encode(),
-        "Formulas/Section1.m": BOM + _section_m(param_expr).encode("utf-8"),
-    })
-    permissions = BOM + (
-        '<?xml version="1.0" encoding="utf-8"?><PermissionList xmlns:xsd="http://www.w3.org/2001/XMLSchema" '
-        'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><CanEvaluateFuturePackages>false</CanEvaluateFuturePackages>'
-        '<FirewallEnabled>true</FirewallEnabled></PermissionList>'
-    ).encode()
-
-    items = [_item("", [_entry("IsTypeDetectionEnabled", "sTrue"), _entry("RunBackgroundAnalysis", "sFalse")],
-                   kind="AllFormulas")]
-    items.append(_item("Section1/DossierDonnees", [
-        _entry("IsHidden", "l0"), _entry("LoadToReportDisabled", "l1"), _entry("FillErrorCode", "sUnknown"),
-        _entry("FillLastUpdated", now), _entry("NavigationStepName", "sNavigation"), _entry("ResultType", "sText")]))
-    for name, cols in TABLES.items():
-        root = json.dumps({"IncludesReferencedQueries": False, "RootFormulaText": "\n".join(m_query(name, cols)),
-                           "ReferencedQueriesFormulaText": {}}, ensure_ascii=False, separators=(",", ":"))
-        items.append(_item(f"Section1/{name}", [
-            _entry("IsHidden", "l0"), _entry("IsDirectQuery", "l0"),
-            _entry("LastAnalysisServicesFormulaText", "s" + root),
-            _entry("IsLastAnalysisServicesFormulaTextCollection", "l1"),
-            _entry("LoadToReportDisabled", "l0"), _entry("FillErrorCode", "sUnknown"),
-            _entry("FillLastUpdated", now), _entry("NavigationStepName", "sNavigation"), _entry("ResultType", "sTable")]))
-        for step in ("Source", "Entetes", "Types"):
-            items.append(_item(f"Section1/{name}/{step}", []))
-    meta_xml = BOM + (
-        '<?xml version="1.0" encoding="utf-8"?><LocalPackageMetadataFile xmlns:xsd="http://www.w3.org/2001/XMLSchema" '
-        'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><Items>' + "".join(items) + "</Items></LocalPackageMetadataFile>"
-    ).encode("utf-8")
-    empty_zip = b"PK\x05\x06" + b"\x00" * 18
-    metadata = struct.pack("<I", 0) + struct.pack("<I", len(meta_xml)) + meta_xml + struct.pack("<I", len(empty_zip)) + empty_zip
-
-    out = struct.pack("<I", 0)
-    for block in (formulas, permissions, metadata, b""):
-        out += struct.pack("<I", len(block)) + block
-    return out
 
 
 # ─────────────────────────────────────────────────────────────
-# 3. Assemblage du .pbit
+# 3. Écriture du projet .pbip
 # ─────────────────────────────────────────────────────────────
-def utf16(obj) -> bytes:
-    text = obj if isinstance(obj, str) else json.dumps(obj, ensure_ascii=False)
-    return text.encode("utf-16-le")
+def _write(path: Path, obj) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    text = obj if isinstance(obj, str) else json.dumps(obj, ensure_ascii=False, indent=2)
+    path.write_text(text, encoding="utf-8")
 
 
-CONTENT_TYPES = (
-    '<?xml version="1.0" encoding="utf-8"?>'
-    '<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">'
-    '<Default Extension="json" ContentType="" />'
-    '<Override PartName="/Version" ContentType="" />'
-    '<Override PartName="/DataMashup" ContentType="" />'
-    '<Override PartName="/DataModelSchema" ContentType="" />'
-    '<Override PartName="/DiagramLayout" ContentType="" />'
-    '<Override PartName="/Report/Layout" ContentType="" />'
-    '<Override PartName="/Settings" ContentType="application/json" />'
-    '<Override PartName="/Metadata" ContentType="application/json" />'
-    "</Types>"
-)
-
-
-def build(path: Path = OUT) -> Path:
-    diagram = {
-        "version": "1.1.0",
-        "diagrams": [{"ordinal": 0, "scrollPosition": {"x": 0, "y": 0}, "nodes": [], "name": "All tables",
-                      "zoomValue": 100, "pinKeyFieldsToTop": False, "showExtraHeaderInfo": False,
-                      "hideKeyFieldsWhenCollapsed": False, "tablesLocked": False}],
-        "selectedDiagram": "All tables",
-        "defaultDiagram": "All tables",
+def _platform(kind: str) -> dict:
+    return {
+        "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+        "metadata": {"type": kind, "displayName": NAME},
+        "config": {"version": "2.0", "logicalId": uid()},
     }
-    # Formats alignés sur un vrai .pbit enregistré par Power BI Desktop (février 2023) :
-    # Settings en version 1, clés de Metadata en majuscules, fichier Version en « 1.25 ».
-    settings = {"Version": 1, "ReportSettings": {},
-                "QueriesSettings": {"TypeDetectionEnabled": True, "RelationshipImportEnabled": True,
-                                    "RunBackgroundAnalysis": True}}
-    metadata = {"Version": 5, "AutoCreatedRelationships": [],
-                "FileDescription": "Tableau de bord de prédiction du churn. "
-                "Indiquez le dossier powerbi\\data du projet (contenant clients.csv).",
-                "CreatedFrom": "Desktop", "CreatedFromRelease": "2023.02"}
-    with zipfile.ZipFile(path, "w", zipfile.ZIP_DEFLATED) as z:
-        z.writestr("[Content_Types].xml", CONTENT_TYPES.encode("utf-8"))
-        z.writestr("Version", utf16("1.25"))
-        model = data_model()
-        param = model["model"]["expressions"][0]["expression"]
-        z.writestr("DataMashup", data_mashup(param))
-        z.writestr("DataModelSchema", utf16(model))
-        z.writestr("DiagramLayout", utf16(diagram))
-        z.writestr("Report/Layout", utf16(layout()))
-        z.writestr("Settings", utf16(settings))
-        z.writestr("Metadata", utf16(metadata))
-    return path
+
+
+def build(root: Path = HERE) -> Path:
+    model_dir = root / f"{NAME}.SemanticModel"
+    report_dir = root / f"{NAME}.Report"
+    for d in (model_dir, report_dir):
+        if d.exists():
+            shutil.rmtree(d)
+
+    # Modèle sémantique : model.bim (format TMSL) + pointeur definition.pbism (version 1.0 = model.bim)
+    _write(model_dir / "model.bim", data_model())
+    _write(model_dir / "definition.pbism", {"version": "1.0", "settings": {}})
+    _write(model_dir / ".platform", _platform("SemanticModel"))
+
+    # Rapport : report.json (format classique) + pointeur definition.pbir (version 1.0 = report.json)
+    _write(report_dir / "report.json", layout())
+    _write(report_dir / "definition.pbir", {
+        "version": "1.0",
+        "datasetReference": {"byPath": {"path": f"../{NAME}.SemanticModel"}, "byConnection": None},
+    })
+    _write(report_dir / ".platform", _platform("Report"))
+
+    pbip = root / f"{NAME}.pbip"
+    _write(pbip, {"version": "1.0", "artifacts": [{"report": {"path": f"{NAME}.Report"}}],
+                  "settings": {"enableAutoRecovery": True}})
+    return pbip
 
 
 if __name__ == "__main__":
-    print(f"Modèle Power BI créé : {build()}")
+    print(f"Projet Power BI créé : {build()}")
+    print(f"Dossier des données  : {DATA_DIR}")
