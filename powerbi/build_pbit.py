@@ -15,10 +15,14 @@ Lancer :  python powerbi/build_pbit.py
 
 from __future__ import annotations
 
+import io
 import json
+import struct
 import uuid
 import zipfile
+from datetime import datetime, timezone
 from pathlib import Path
+from xml.sax.saxutils import escape as xml_escape
 
 HERE = Path(__file__).resolve().parent
 OUT = HERE / "churn_dashboard.pbit"
@@ -341,6 +345,93 @@ def layout() -> dict:
 
 
 # ─────────────────────────────────────────────────────────────
+# 2 bis. DataMashup : les requêtes Power Query au format binaire
+# ─────────────────────────────────────────────────────────────
+# Power BI garde les requêtes à deux endroits : dans DataModelSchema et dans
+# DataMashup (format « MS-QDEFF »). Il vérifie que les deux concordent ;
+# sans DataMashup, il refuse d'ouvrir le fichier (MashupValidationError).
+#
+# Structure de DataMashup (entiers sur 4 octets, petit-boutiste) :
+#   version (0) | taille + zip des formules | taille + XML des permissions
+#   | taille + métadonnées | taille + liaisons de permissions (vide ici)
+BOM = b"\xef\xbb\xbf"
+
+
+def _zip_bytes(files: dict[str, bytes]) -> bytes:
+    buf = io.BytesIO()
+    with zipfile.ZipFile(buf, "w", zipfile.ZIP_DEFLATED) as z:
+        for name, data in files.items():
+            z.writestr(name, data)
+    return buf.getvalue()
+
+
+def _section_m(param_expr: str) -> str:
+    parts = ["section Section1;", "", f"shared DossierDonnees = {param_expr};"]
+    for name, cols in TABLES.items():
+        parts += ["", f"shared {name} = " + "\n".join(m_query(name, cols)) + ";"]
+    return "\r\n".join(parts) + "\r\n"
+
+
+def _entry(t: str, v: str) -> str:
+    return f'<Entry Type="{t}" Value="{xml_escape(v, {chr(34): "&quot;"})}" />'
+
+
+def _item(path: str, entries: list[str], kind: str = "Formula") -> str:
+    loc = f"<ItemPath>{path}</ItemPath>" if path else "<ItemPath />"
+    body = "<StableEntries>" + "".join(entries) + "</StableEntries>" if entries else "<StableEntries />"
+    return f"<Item><ItemLocation><ItemType>{kind}</ItemType>{loc}</ItemLocation>{body}</Item>"
+
+
+def data_mashup(param_expr: str) -> bytes:
+    now = "d" + datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.0000000Z")
+    formulas = _zip_bytes({
+        "[Content_Types].xml": BOM + (
+            '<?xml version="1.0" encoding="utf-8"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">'
+            '<Default Extension="xml" ContentType="text/xml" /><Default Extension="m" ContentType="application/x-ms-m" /></Types>'
+        ).encode(),
+        "Config/Package.xml": BOM + (
+            '<?xml version="1.0" encoding="utf-8"?><Package xmlns:xsd="http://www.w3.org/2001/XMLSchema" '
+            'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><Version>2.114.322.0</Version>'
+            '<MinVersion>1.5.3296.0</MinVersion><Culture>fr-FR</Culture></Package>'
+        ).encode(),
+        "Formulas/Section1.m": BOM + _section_m(param_expr).encode("utf-8"),
+    })
+    permissions = BOM + (
+        '<?xml version="1.0" encoding="utf-8"?><PermissionList xmlns:xsd="http://www.w3.org/2001/XMLSchema" '
+        'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><CanEvaluateFuturePackages>false</CanEvaluateFuturePackages>'
+        '<FirewallEnabled>true</FirewallEnabled></PermissionList>'
+    ).encode()
+
+    items = [_item("", [_entry("IsTypeDetectionEnabled", "sTrue"), _entry("RunBackgroundAnalysis", "sFalse")],
+                   kind="AllFormulas")]
+    items.append(_item("Section1/DossierDonnees", [
+        _entry("IsHidden", "l0"), _entry("LoadToReportDisabled", "l1"), _entry("FillErrorCode", "sUnknown"),
+        _entry("FillLastUpdated", now), _entry("NavigationStepName", "sNavigation"), _entry("ResultType", "sText")]))
+    for name, cols in TABLES.items():
+        root = json.dumps({"IncludesReferencedQueries": False, "RootFormulaText": "\n".join(m_query(name, cols)),
+                           "ReferencedQueriesFormulaText": {}}, ensure_ascii=False, separators=(",", ":"))
+        items.append(_item(f"Section1/{name}", [
+            _entry("IsHidden", "l0"), _entry("IsDirectQuery", "l0"),
+            _entry("LastAnalysisServicesFormulaText", "s" + root),
+            _entry("IsLastAnalysisServicesFormulaTextCollection", "l1"),
+            _entry("LoadToReportDisabled", "l0"), _entry("FillErrorCode", "sUnknown"),
+            _entry("FillLastUpdated", now), _entry("NavigationStepName", "sNavigation"), _entry("ResultType", "sTable")]))
+        for step in ("Source", "Entetes", "Types"):
+            items.append(_item(f"Section1/{name}/{step}", []))
+    meta_xml = BOM + (
+        '<?xml version="1.0" encoding="utf-8"?><LocalPackageMetadataFile xmlns:xsd="http://www.w3.org/2001/XMLSchema" '
+        'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><Items>' + "".join(items) + "</Items></LocalPackageMetadataFile>"
+    ).encode("utf-8")
+    empty_zip = b"PK\x05\x06" + b"\x00" * 18
+    metadata = struct.pack("<I", 0) + struct.pack("<I", len(meta_xml)) + meta_xml + struct.pack("<I", len(empty_zip)) + empty_zip
+
+    out = struct.pack("<I", 0)
+    for block in (formulas, permissions, metadata, b""):
+        out += struct.pack("<I", len(block)) + block
+    return out
+
+
+# ─────────────────────────────────────────────────────────────
 # 3. Assemblage du .pbit
 # ─────────────────────────────────────────────────────────────
 def utf16(obj) -> bytes:
@@ -353,6 +444,7 @@ CONTENT_TYPES = (
     '<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">'
     '<Default Extension="json" ContentType="" />'
     '<Override PartName="/Version" ContentType="" />'
+    '<Override PartName="/DataMashup" ContentType="" />'
     '<Override PartName="/DataModelSchema" ContentType="" />'
     '<Override PartName="/DiagramLayout" ContentType="" />'
     '<Override PartName="/Report/Layout" ContentType="" />'
@@ -383,7 +475,10 @@ def build(path: Path = OUT) -> Path:
     with zipfile.ZipFile(path, "w", zipfile.ZIP_DEFLATED) as z:
         z.writestr("[Content_Types].xml", CONTENT_TYPES.encode("utf-8"))
         z.writestr("Version", utf16("1.25"))
-        z.writestr("DataModelSchema", utf16(data_model()))
+        model = data_model()
+        param = model["model"]["expressions"][0]["expression"]
+        z.writestr("DataMashup", data_mashup(param))
+        z.writestr("DataModelSchema", utf16(model))
         z.writestr("DiagramLayout", utf16(diagram))
         z.writestr("Report/Layout", utf16(layout()))
         z.writestr("Settings", utf16(settings))

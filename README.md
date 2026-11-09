@@ -167,7 +167,7 @@ python -m churn.train                                             # entraînemen
 python -m churn.predict ../data/raw/telco_churn.csv scores.csv    # scorer un fichier de clients
 cd ..
 python powerbi/build_pbit.py                                      # régénérer le modèle Power BI
-pytest -v                                                         # 8 tests
+pytest -v                                                         # 9 tests
 ```
 
 ---
@@ -190,7 +190,7 @@ churn-prediction/
 ├── models/model.joblib             Modèle entraîné + seuil + données de référence
 ├── reports/                        metrics.json et figures
 ├── notebooks/exploration.ipynb     Exploration des données
-├── tests/test_churn.py             8 tests : données, profit, gain, exports, structure du .pbit
+├── tests/test_churn.py             9 tests : données, profit, gain, exports, structure du .pbit
 ├── lancer.bat
 └── .github/workflows/ci.yml        Entraînement + génération du .pbit + tests à chaque push
 ```

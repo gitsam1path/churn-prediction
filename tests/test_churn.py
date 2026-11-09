@@ -77,3 +77,19 @@ def test_pbit_valide():
     tables = {t["name"] for t in model["model"]["tables"]}
     assert {"clients", "courbe_profit", "importance_variables"} <= tables
     assert len(layout["sections"]) == 3
+
+
+def test_pbit_datamashup_concorde_avec_le_modele():
+    """Power BI refuse le fichier si les requêtes de DataMashup et du modèle diffèrent."""
+    import io
+    import struct
+    with zipfile.ZipFile(ROOT / "powerbi" / "churn_dashboard.pbit") as z:
+        mashup = z.read("DataMashup")
+        model = json.loads(z.read("DataModelSchema").decode("utf-16-le"))
+    (taille,) = struct.unpack_from("<I", mashup, 4)
+    section = zipfile.ZipFile(io.BytesIO(mashup[8:8 + taille])).read("Formulas/Section1.m").decode("utf-8-sig")
+    assert section.startswith("section Section1;")
+    assert "shared DossierDonnees" in section
+    for table in model["model"]["tables"]:
+        expression = "\n".join(table["partitions"][0]["source"]["expression"])
+        assert f"shared {table['name']} = {expression};" in section
