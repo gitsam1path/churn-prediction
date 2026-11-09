@@ -187,6 +187,9 @@ def data_model() -> dict:
             "annotations": [
                 {"name": "PBI_QueryOrder", "value": json.dumps(["DossierDonnees", *TABLES])},
                 {"name": "__PBI_TimeIntelligenceEnabled", "value": "0"},
+                # Version de Power BI Desktop « auteur » : volontairement ancienne (février 2023)
+                # pour que toute version plus récente accepte d'ouvrir le fichier.
+                {"name": "PBIDesktopVersion", "value": "2.114.322.0 (23.02)"},
             ],
         },
     }
@@ -332,7 +335,7 @@ def layout() -> dict:
         "id": 0,
         "resourcePackages": [],
         "sections": sections,
-        "config": json.dumps({"version": "5.43", "themeCollection": {}, "activeSectionIndex": 0}),
+        "config": json.dumps({"version": "5.32", "themeCollection": {}, "activeSectionIndex": 0}),
         "layoutOptimization": 0,
     }
 
@@ -353,8 +356,8 @@ CONTENT_TYPES = (
     '<Override PartName="/DataModelSchema" ContentType="" />'
     '<Override PartName="/DiagramLayout" ContentType="" />'
     '<Override PartName="/Report/Layout" ContentType="" />'
-    '<Override PartName="/Settings" ContentType="" />'
-    '<Override PartName="/Metadata" ContentType="" />'
+    '<Override PartName="/Settings" ContentType="application/json" />'
+    '<Override PartName="/Metadata" ContentType="application/json" />'
     "</Types>"
 )
 
@@ -368,13 +371,18 @@ def build(path: Path = OUT) -> Path:
         "selectedDiagram": "All tables",
         "defaultDiagram": "All tables",
     }
-    settings = {"Version": 4, "ReportSettings": {},
-                "QueriesSettings": {"TypeDetectionEnabled": True, "RelationshipImportEnabled": True}}
-    metadata = {"version": 5, "fileDescription": "Tableau de bord de prédiction du churn. "
-                "Indiquez le dossier powerbi\\data du projet (contenant clients.csv)."}
+    # Formats alignés sur un vrai .pbit enregistré par Power BI Desktop (février 2023) :
+    # Settings en version 1, clés de Metadata en majuscules, fichier Version en « 1.25 ».
+    settings = {"Version": 1, "ReportSettings": {},
+                "QueriesSettings": {"TypeDetectionEnabled": True, "RelationshipImportEnabled": True,
+                                    "RunBackgroundAnalysis": True}}
+    metadata = {"Version": 5, "AutoCreatedRelationships": [],
+                "FileDescription": "Tableau de bord de prédiction du churn. "
+                "Indiquez le dossier powerbi\\data du projet (contenant clients.csv).",
+                "CreatedFrom": "Desktop", "CreatedFromRelease": "2023.02"}
     with zipfile.ZipFile(path, "w", zipfile.ZIP_DEFLATED) as z:
         z.writestr("[Content_Types].xml", CONTENT_TYPES.encode("utf-8"))
-        z.writestr("Version", utf16("1.28"))
+        z.writestr("Version", utf16("1.25"))
         z.writestr("DataModelSchema", utf16(data_model()))
         z.writestr("DiagramLayout", utf16(diagram))
         z.writestr("Report/Layout", utf16(layout()))
