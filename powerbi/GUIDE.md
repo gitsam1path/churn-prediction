@@ -1,0 +1,64 @@
+# Tableau de bord Power BI — mode d'emploi
+
+## Ouvrir le modèle `churn_dashboard.pbit`
+
+1. Lancez l'entraînement au moins une fois (`cd src && python -m churn.train`) : il crée les CSV dans `powerbi/data/`.
+   *Les CSV sont déjà fournis dans le dépôt : cette étape n'est utile que si vous modifiez le modèle.*
+2. Double-cliquez sur **`powerbi/churn_dashboard.pbit`** (Power BI Desktop, Windows).
+3. Power BI demande le paramètre **DossierDonnees** : collez le chemin **complet** du dossier `powerbi\data`,
+   par exemple `C:\Users\vous\Documents\churn-prediction\powerbi\data`, puis **Charger**.
+4. Enregistrez le résultat en `.pbix` (Fichier → Enregistrer sous).
+
+Pour changer de dossier plus tard : **Accueil → Transformer les données → Modifier les paramètres**.
+
+## Contenu du rapport
+
+| Page | Visuels |
+|---|---|
+| **Vue d'ensemble** | Clients, taux de churn, revenu mensuel perdu, part du revenu perdu · taux de churn par contrat, ancienneté, moyen de paiement, type d'internet · filtre par contrat |
+| **Clients à risque** | Clients à risque élevé, clients à contacter, revenu mensuel à risque, gain attendu · répartition par segment · liste des clients triée par probabilité, avec les 2 motifs de départ · filtre par segment |
+| **Modèle et campagne** | Profit selon le seuil de ciblage · courbe de gain · importance des variables · comparaison des modèles · seuil et coût d'une offre |
+
+## Tables
+
+| Table | Contenu |
+|---|---|
+| `clients` | Les 7 043 clients avec leur probabilité de départ (calculée hors échantillon), segment, ciblage, gain attendu et motifs |
+| `comparaison_modeles` | ROC AUC et PR AUC des 3 modèles comparés |
+| `importance_variables` | Importance par permutation de chaque variable |
+| `courbe_profit` | Profit de la campagne pour chaque seuil de ciblage |
+| `courbe_gain` | Part des départs captés selon la part des clients contactés |
+| `parametres` | Hypothèses de la campagne (coût de l'offre, taux de succès, seuil) |
+
+## Mesures DAX (table `clients`)
+
+```dax
+Nb clients                 = COUNTROWS ( clients )
+Nb départs                 = SUM ( clients[churn] )
+Taux de churn              = DIVIDE ( [Nb départs], [Nb clients] )
+Revenu mensuel             = SUM ( clients[facture_mensuelle] )
+Revenu mensuel perdu       = CALCULATE ( SUM ( clients[facture_mensuelle] ), clients[churn] = 1 )
+Part du revenu perdu       = DIVIDE ( [Revenu mensuel perdu], [Revenu mensuel] )
+Probabilité moyenne        = AVERAGE ( clients[probabilite_churn] )
+Clients à risque élevé     = CALCULATE ( [Nb clients], clients[segment_risque] = "Élevé" )
+Clients ciblés             = CALCULATE ( [Nb clients], clients[cible_campagne] = "Oui" )
+Revenu mensuel à risque    = SUMX ( clients, clients[facture_mensuelle] * clients[probabilite_churn] )
+Gain attendu de la campagne = CALCULATE ( SUM ( clients[gain_attendu] ), clients[cible_campagne] = "Oui" )
+```
+
+## Si le modèle `.pbit` ne s'ouvre pas : recréer le rapport en 15 minutes
+
+Le fichier `.pbit` est généré par un script (`powerbi/build_pbit.py`). Si votre version de Power BI le refuse :
+
+1. **Accueil → Obtenir les données → Texte/CSV**, et importez les 6 fichiers de `powerbi/data/`.
+   Dans l'aperçu, vérifiez que l'**origine du fichier** est *65001 : Unicode (UTF-8)* pour garder les accents.
+2. Si les décimales s'affichent mal (ex. `0.5778` lu comme `5778`) : dans Power Query, sur chaque colonne numérique,
+   **Modifier le type → Utilisation des paramètres régionaux… → Décimal, Anglais (États-Unis)**.
+3. Dans la table `clients`, colonne `tranche_anciennete` : **Outils de colonne → Trier par colonne → tranche_ordre**.
+4. Créez les mesures ci-dessus (**Nouvelle mesure**, copier-coller).
+5. Reproduisez les visuels listés dans « Contenu du rapport ».
+
+## Mettre à jour les données
+
+Après un nouvel entraînement : **Accueil → Actualiser**. Les CSV sont réécrits au même endroit.
+Pour régénérer le modèle `.pbit` lui-même : `python powerbi/build_pbit.py`.

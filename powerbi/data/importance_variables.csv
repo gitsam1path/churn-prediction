@@ -1,0 +1,18 @@
+variable,importance,libelle
+anciennete_mois,0.08371,Ancienneté
+contrat,0.03301,Contrat
+internet,0.01676,Internet
+securite_en_ligne,0.00441,Sécurité en ligne
+support_technique,0.00359,Support technique
+moyen_paiement,0.00314,Paiement
+facture_dematerialisee,0.00275,Facture dématérialisée
+lignes_multiples,0.00213,Lignes multiples
+telephone,0.00138,Téléphone
+senior,0.00116,Senior
+sauvegarde_en_ligne,0.0011,Sauvegarde en ligne
+personnes_a_charge,0.00072,Personnes à charge
+streaming_films,0.00064,Streaming films
+protection_appareil,0.00054,Protection de l'appareil
+streaming_tv,0.0005,Streaming TV
+en_couple,6e-05,En couple
+nb_services,-0.00024,Services en option

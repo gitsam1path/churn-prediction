@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+.pytest_cache/
+.ipynb_checkpoints/
+.DS_Store
+Thumbs.db
+
+# Fichiers Power BI enregistrés localement (le modèle .pbit, lui, est versionné)
+*.pbix

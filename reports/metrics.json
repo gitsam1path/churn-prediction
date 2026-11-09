@@ -1,0 +1,116 @@
+{
+  "date": "2026-11-09",
+  "donnees": {
+    "clients": 7043,
+    "taux_churn": 0.2653698707936959,
+    "revenu_mensuel_total": 456116.6,
+    "revenu_mensuel_perdu": 139130.85,
+    "anciennete_mediane": 29.0
+  },
+  "hypotheses_campagne": {
+    "cout_offre": 50.0,
+    "taux_succes": 0.3,
+    "mois_valeur": 12
+  },
+  "comparaison": [
+    {
+      "modele": "Régression logistique",
+      "roc_auc": 0.8451,
+      "roc_auc_ecart_type": 0.012,
+      "pr_auc": 0.6601,
+      "profit_cv": 221089.26,
+      "retenu": true
+    },
+    {
+      "modele": "Forêt aléatoire",
+      "roc_auc": 0.845,
+      "roc_auc_ecart_type": 0.0078,
+      "pr_auc": 0.6534,
+      "profit_cv": 218993.82,
+      "retenu": false
+    },
+    {
+      "modele": "Gradient boosting",
+      "roc_auc": 0.8441,
+      "roc_auc_ecart_type": 0.0116,
+      "pr_auc": 0.6599,
+      "profit_cv": 220562.36,
+      "retenu": false
+    }
+  ],
+  "modele_retenu": "Régression logistique",
+  "raison": "meilleur ROC AUC",
+  "test": {
+    "roc_auc": 0.8396277351520318,
+    "pr_auc": 0.6306697513053946,
+    "seuil": 0.27,
+    "rappel": 0.7754010695187166,
+    "precision": 0.5141843971631206,
+    "part_clients_cibles": 0.40028388928317954,
+    "lift_top10": 2.771715049656226,
+    "lift_top20": 2.493710392600909,
+    "profit_campagne": 51549.71999999999,
+    "profit_tout_le_monde": 27523.639999999985,
+    "clients_cibles": 564
+  },
+  "importance": [
+    {
+      "variable": "anciennete_mois",
+      "importance": 0.0837,
+      "libelle": "Ancienneté"
+    },
+    {
+      "variable": "contrat",
+      "importance": 0.033,
+      "libelle": "Contrat"
+    },
+    {
+      "variable": "internet",
+      "importance": 0.0168,
+      "libelle": "Internet"
+    },
+    {
+      "variable": "securite_en_ligne",
+      "importance": 0.0044,
+      "libelle": "Sécurité en ligne"
+    },
+    {
+      "variable": "support_technique",
+      "importance": 0.0036,
+      "libelle": "Support technique"
+    },
+    {
+      "variable": "moyen_paiement",
+      "importance": 0.0031,
+      "libelle": "Paiement"
+    },
+    {
+      "variable": "facture_dematerialisee",
+      "importance": 0.0027,
+      "libelle": "Facture dématérialisée"
+    },
+    {
+      "variable": "lignes_multiples",
+      "importance": 0.0021,
+      "libelle": "Lignes multiples"
+    },
+    {
+      "variable": "telephone",
+      "importance": 0.0014,
+      "libelle": "Téléphone"
+    },
+    {
+      "variable": "senior",
+      "importance": 0.0012,
+      "libelle": "Senior"
+    }
+  ],
+  "portefeuille": {
+    "clients_cibles": 2815,
+    "segments": {
+      "Faible": 3670,
+      "Moyen": 1825,
+      "Élevé": 1548
+    }
+  }
+}

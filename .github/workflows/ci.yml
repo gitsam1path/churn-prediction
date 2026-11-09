@@ -1,0 +1,29 @@
+# À chaque push : réentraînement complet du modèle, régénération du modèle Power BI, puis tests.
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  train-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Installer les dépendances
+        run: pip install -r requirements.txt
+
+      - name: Entraîner le modèle et exporter les données Power BI
+        run: cd src && python -m churn.train
+
+      - name: Générer le modèle Power BI (.pbit)
+        run: python powerbi/build_pbit.py
+
+      - name: Lancer les tests
+        run: pytest -v

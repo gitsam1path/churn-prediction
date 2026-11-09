@@ -1,0 +1,8 @@
+# Le modèle (models/model.joblib) a été entraîné avec scikit-learn 1.8 :
+# gardez cette version, ou réentraînez avec `cd src && python -m churn.train` (30 secondes).
+scikit-learn==1.8.0
+pandas>=2.2
+numpy>=2.0
+joblib>=1.4
+matplotlib>=3.8
+pytest>=8.0

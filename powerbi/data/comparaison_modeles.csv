@@ -1,0 +1,4 @@
+modele,roc_auc,roc_auc_ecart_type,pr_auc,profit_cv,retenu
+Régression logistique,0.8451,0.012,0.6601,221089.26,True
+Forêt aléatoire,0.845,0.0078,0.6534,218993.82,False
+Gradient boosting,0.8441,0.0116,0.6599,220562.36,False
